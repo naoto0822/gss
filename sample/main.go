@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 
-	"github.com/naoto0822/go-rss/atom"
+	"github.com/naoto0822/gss/atom"
 )
 
 func main() {
