@@ -2,6 +2,8 @@ package atom
 
 import ()
 
+// cf. https://tools.ietf.org/html/rfc4287
+
 // Feed atom feed
 type Feed struct {
 	ID       string   `xml:"id"`
@@ -18,11 +20,12 @@ type Feed struct {
 
 // Entry atom entry
 type Entry struct {
-	ID      string `xml:"id"`
-	Title   string `xml:"title"`
-	Link    Link   `xml:"link"`
-	Updated string `xml:"updated"`
-	Summary string `xml:"summary"`
+	ID           string        `xml:"id"`
+	Title        string        `xml:"title"`
+	Link         Link          `xml:"link"`
+	Updated      string        `xml:"updated"`
+	Summary      string        `xml:"summary"`
+	Contributors []Contributor `xml:"contributor"`
 }
 
 // Link atom link
@@ -37,4 +40,9 @@ type Author struct {
 	Name  string `xml:"name"`
 	Email string `xml:"email"`
 	URI   string `xml:"uri"`
+}
+
+// Contributor atom contributor
+type Contributor struct {
+	Name string `xml:"name"`
 }
