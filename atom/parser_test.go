@@ -101,9 +101,19 @@ func TestParseAtom(t *testing.T) {
 	if !reflect.DeepEqual(feed, want) {
 		t.Error("TestParseAtom Parse returned not match, ", feed, want)
 	}
-
 }
 
 func TestParseErrorAtom(t *testing.T) {
+	path := "../testdata/atom_1.0_error.xml"
+	bytes, err := ioutil.ReadFile(path)
+	if err != nil {
+		t.Error("TestParseErrorAtom ioutil.ReadFile returned error:", err)
+	}
 
+	parser := Parser{}
+	feed, err := parser.Parse(bytes)
+
+	if err == nil {
+		t.Error("TestParseErrorAtom Parse returned error:", err, ", feed:", feed)
+	}
 }
