@@ -22,8 +22,10 @@ type Feed struct {
 type Entry struct {
 	ID           string        `xml:"id"`
 	Title        string        `xml:"title"`
-	Link         Link          `xml:"link"`
+	Links        []Link        `xml:"link"`
 	Updated      string        `xml:"updated"`
+	Published    string        `xml:"published"`
+	Authors      []Author      `xml:"author"`
 	Summary      string        `xml:"summary"`
 	Contributors []Contributor `xml:"contributor"`
 }
