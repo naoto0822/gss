@@ -13,23 +13,28 @@
     <uri>http://example.com/~johndoe</uri>
   </author>
 
-  <icon>/icon.jpg</icon>
-  <logo>/logo.jpg</logo>
-  <rights> © 2005 John Doe </rights>
+  <icon>icon.jpg</icon>
+  <logo>logo.jpg</logo>
+  <rights>2005 naoto0822</rights>
 
   <entry>
     <id>urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a</id>
-    <title>Atom-Powered Robots Run Amok</title>
+    <title>This is Atom 1.0</title>
     <link href="http://example.org/2003/12/13/atom03"/>
     <updated>2003-12-13T18:30:02Z</updated>
+    <published>2003-12-13T08:29:29-04:00</published>
     <summary>Some text.</summary>
+    <contributor>
+      <name>Sam Ruby</name>
+    </contributor>
   </entry>
 
   <entry>
     <id>urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a</id>
-    <title>Atom-Powered Robots Run Amok</title>
+    <title>Today is hot</title>
     <link href="http://example.org/2003/12/13/atom03"/>
     <updated>2003-12-13T18:30:02Z</updated>
+    <published>2018-12-13T08:29:29-04:00</published>
     <summary>Some text.</summary>
   </entry>
 
