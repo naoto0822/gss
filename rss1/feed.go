@@ -17,8 +17,8 @@ type Channel struct {
 	Title       string `xml:"title"`
 	Link        string `xml:"link"`
 	Description string `xml:"description"`
-	Date        string `xml:"dc:date"`
-	Language    string `xml:"dc:language"`
+	Date        string `xml:"date"`
+	Language    string `xml:"language"`
 }
 
 // Image RSS1.0 image
@@ -33,8 +33,8 @@ type Item struct {
 	Title       string `xml:"title"`
 	Link        string `xml:"link"`
 	Description string `xml:"description"`
-	Date        string `xml:"dc:date"`
-	Creator     string `xml:"dc:creator"`
+	Date        string `xml:"date"`
+	Creator     string `xml:"creator"`
 }
 
 // TextInput RSS1.0 TextInput
