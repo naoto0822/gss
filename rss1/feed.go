@@ -34,7 +34,7 @@ type Item struct {
 	Link        string `xml:"link"`
 	Description string `xml:"description"`
 	Date        string `xml:"dc:date"`
-	Creator     string `xml:"dc:"creator"`
+	Creator     string `xml:"dc:creator"`
 }
 
 // TextInput RSS1.0 TextInput
