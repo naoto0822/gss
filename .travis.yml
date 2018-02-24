@@ -1,13 +1,14 @@
 sudo: false
 language: go
 go:
-  - 1.9.x
-  - master
-
+- 1.9.x
+- master
 script:
-  - make
-
+- make
 matrix:
   allow_failures:
-    - go: master
+  - go: master
   fast_finish: true
+notifications:
+  slack:
+    secure: jVW0icRYNbzWwtVkGfkg+u1DFLaYT09tXqPEnFLCK+PVNMTJ1h59NJGktiGuNGPJHZkKRyYnPKdTreZSLGHm6tkIM3p+Ni4JorSNAfmeECcw/5MB6JqLdGQYOE+epd6dygPgNNLo609huXblwoZsO3eKymhG+nZZqxA9UzhyQUi3Shg2Awu26D3SsaUc44Y9CJDvy+xJRarfw/oXy375/g0k5AeqPQ9iI9aRuSwO9kJfakYfiDC97z6FF47+9mWkZSMcLvVXQxcsWlAII8Ql1sjFQARGJ2bOtovgCdBFrmYKhGmU98FEmoAgl/ASjTfVwPIt5gg5NgN7YbqaBGxNrk6iRk27l4jYJEnVqyPgEBzHBZU4DbcDBgQtV84YaF4NE34SfU04z84QsDymgvI/agENDrETev97Zn5SXmahDc5VqWN7Lb0khF2HFBmVLWTngy+e2yhyJtqfSyYOfGqdeShHX7kTFr5Bt6H1/0TaEK0/uHfG2BOSoATP815LQrHHl+2t7kUc1PZ4tmX3eOLvCP2N5kN2ynEARMcEP1rb9RPA1qt2vmcp56UpZ0cD0aOj/NNmT/TywvqlrnHknplsP480u4M0HJW+/59c6Cri5P5UzAt21LZfZ6/YOeZ6KvnkE5ILfXtzvfp7eJARG2pCCdDrRQZH+vsRyaIt77GbO4Q=
