@@ -1,4 +1,4 @@
-TARGET := ./atom ./session ./rss
+TARGET := ./atom ./session ./rss1
 
 ## exec all task
 all: dep vet lint test
