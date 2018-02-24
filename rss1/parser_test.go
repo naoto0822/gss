@@ -1,6 +1,8 @@
 package rss1
 
 import (
+	"io/ioutil"
+	"reflect"
 	"testing"
 )
 
@@ -12,5 +14,87 @@ func TestNewParser(t *testing.T) {
 }
 
 func TestParseRSS1(t *testing.T) {
-	t.Log("nothing test")
+	path := "../testdata/rss_1.0.xml"
+	bytes, err := ioutil.ReadFile(path)
+	if err != nil {
+		t.Error("TestParseRSS1 ioutil.ReadFile returned error:", err)
+	}
+
+	parser := NewParser()
+	feed, err := parser.Parse(bytes)
+
+	if err != nil {
+		t.Error("TestParseRSS1 Parse returned error:", err)
+	}
+
+	if feed == nil {
+		t.Error("TestParseRSS1 Parse not expected nil")
+	}
+
+	// following expected Struct
+	channel := Channel{
+		Title:       "Channel Title",
+		Link:        "http://xml.com/pub",
+		Description: "this is description.",
+		Date:        "2003-12-13T18:30:02Z",
+		Language:    "ja",
+	}
+
+	image := Image{
+		Title: "XML.com",
+		Link:  "http://www.xml.com",
+		URL:   "http://xml.com/universal/images/xml_tiny.gif",
+	}
+
+	item1 := Item{
+		Title:       "Processing Inclusions with XSLT",
+		Link:        "http://xml.com/pub/2000/08/09/xslt/xslt.html",
+		Description: "Processing document inclusions with general XML tools can be problematic. This article proposes a way of preserving inclusion information through SAX-based processing.",
+		Date:        "2003-12-13T18:30:02Z",
+		Creator:     "記事1の作者名",
+	}
+
+	item2 := Item{
+		Title:       "Putting RDF to Work",
+		Link:        "http://xml.com/pub/2000/08/09/rdfdb/index.html",
+		Description: "Tool and API support for the Resource Description Framework is slowly coming of age. Edd Dumbill takes a look at RDFDB, one of the most exciting new RDF toolkits.",
+		Date:        "2003-12-13T18:30:02Z",
+		Creator:     "記事2の作者名",
+	}
+
+	var items []Item
+	items = append(items, item1)
+	items = append(items, item2)
+
+	textInput := TextInput{
+		Title:       "Search XML.com",
+		Description: "Search XML.com's XML collection",
+		Name:        "s",
+		Link:        "http://search.xml.com",
+	}
+
+	want := &Feed{
+		Channel:   channel,
+		Image:     image,
+		Items:     items,
+		TextInput: textInput,
+	}
+
+	if !reflect.DeepEqual(feed, want) {
+		t.Error("TestParseRSS1 Parse not match Feed struct")
+	}
+}
+
+func TestParseErrorRSS1(t *testing.T) {
+	path := "../testdata/rss_1.0_error.xml"
+	bytes, err := ioutil.ReadFile(path)
+	if err != nil {
+		t.Error("TestParseErrorRSS1 ioutil.ReadFile returned error:", err)
+	}
+
+	parser := NewParser()
+	feed, err := parser.Parse(bytes)
+	if err == nil {
+		t.Error("TestParseErrorRSS1 Parse not expected return, feed:", feed)
+	}
 }
