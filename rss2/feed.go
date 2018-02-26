@@ -2,6 +2,8 @@ package rss2
 
 import ()
 
+// TODO: field name ~s if slice
+
 // Feed RSS2.0 feed
 type Feed struct {
 	Channel Channel `xml:"channel"`
@@ -71,4 +73,15 @@ type SkipHours struct {
 // SkipDays RSS2.0 skipDays elements
 type SkipDays struct {
 	Days []string `xml:"day"`
+}
+
+// Item RSS2.0 item elements
+type Item struct {
+	Title       string     `xml:"title"`
+	Link        string     `xml:"link"`
+	Description string     `xml:"description"`
+	Author      string     `xml:"author"`
+	Category    []Category `xml:"category"`
+	Comments    string     `xml:"comments"`
+	// TODO: enclosure
 }
