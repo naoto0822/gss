@@ -4,6 +4,7 @@ import ()
 
 // Feed RSS2.0 feed
 type Feed struct {
+	Channel Channel `xml:"channel"`
 }
 
 // Channel RSS2.0 channel elements
@@ -24,7 +25,9 @@ type Channel struct {
 	TTL            int        `xml:"ttl"`
 	Image          Image      `xml:"image"`
 	Rating         string     `xml:"rating"`
-	// TODO: continue
+	TextInput      TextInput  `xml:"textInput"`
+	SkipHours      SkipHours  `xml:"skipHours"`
+	SkipDays       SkipDays   `xml:"skipDays"`
 }
 
 // Category RSS2.0 category elements
@@ -50,4 +53,22 @@ type Image struct {
 	Description string `xml:"description"`
 	Width       int    `xml:"width"`
 	Height      int    `xml:"height"`
+}
+
+// TextInput RSS2.0 testInput elements
+type TextInput struct {
+	Title       string `xml:"title"`
+	Description string `xml:"description"`
+	Name        string `xml:"name"`
+	Link        string `xml:"link"`
+}
+
+// SkipHours RSS2.0 skipHours elements
+type SkipHours struct {
+	Hours []int `xml:"hour"`
+}
+
+// SkipDays RSS2.0 skipDays elements
+type SkipDays struct {
+	Days []string `xml:"day"`
 }
