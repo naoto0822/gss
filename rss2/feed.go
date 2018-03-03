@@ -30,6 +30,7 @@ type Channel struct {
 	TextInput      TextInput  `xml:"textInput"`
 	SkipHours      SkipHours  `xml:"skipHours"`
 	SkipDays       SkipDays   `xml:"skipDays"`
+	Items          []Item     `xml:"item"`
 }
 
 // Category RSS2.0 category elements
@@ -83,5 +84,26 @@ type Item struct {
 	Author      string     `xml:"author"`
 	Category    []Category `xml:"category"`
 	Comments    string     `xml:"comments"`
-	// TODO: enclosure
+	Enclosure   Enclosure  `xml:"enclosure"`
+	GUID        GUID       `xml:"guid"`
+	Source      Source     `xml:"source"`
+}
+
+// Enclosure RSS2.0 enclosure elements
+type Enclosure struct {
+	URL    string `xml:"url,attr"`
+	Length int64  `xml:"length,attr"`
+	Type   string `xml:"type,attr"`
+}
+
+// GUID RSS2.0 guid elements
+type GUID struct {
+	Value       string `xml:",chardata"`
+	IsPermaLink string `xml:"isPermaLink,attr"`
+}
+
+// Source RSS2.0 source elements
+type Source struct {
+	Value string `xml:",chardata"`
+	URL   string `xml:"url,attr"`
 }
