@@ -1,11 +1,18 @@
 package gss
 
+import ()
+
 // rootFeed is detected struct
-type rootFeed struct {
+type RootFeed struct {
+	XMLTag  XMLTag  `xml:"xml"`
 	RdfTag  rdfTag  `xml:"RDF"`
 	RssTag  rssTag  `xml:"rss"`
 	AtomTag atomTag `xml:"feed"`
-	RssType RssType
+}
+
+// XMLTag
+type XMLTag struct {
+	Version string `xml:"version,attr"`
 }
 
 // rdfTag is RSS1.0 root elements
