@@ -1,8 +1,8 @@
 package rss2
 
-import ()
-
-// TODO: field name ~s if slice
+import (
+	"html/template"
+)
 
 // Feed RSS2.0 feed
 type Feed struct {
@@ -20,7 +20,7 @@ type Channel struct {
 	WebMaster      string     `xml:"webMaster"`
 	PubDate        string     `xml:"pubDate"`
 	LastBuildDate  string     `xml:"lastBuildDate"`
-	Category       []Category `xml:"category"`
+	Categories     []Category `xml:"category"`
 	Generator      string     `xml:"generator"`
 	Docs           string     `xml:"docs"`
 	Cloud          Cloud      `xml:"cloud"`
@@ -78,15 +78,16 @@ type SkipDays struct {
 
 // Item RSS2.0 item elements
 type Item struct {
-	Title       string     `xml:"title"`
-	Link        string     `xml:"link"`
-	Description string     `xml:"description"`
-	Author      string     `xml:"author"`
-	Category    []Category `xml:"category"`
-	Comments    string     `xml:"comments"`
-	Enclosure   Enclosure  `xml:"enclosure"`
-	GUID        GUID       `xml:"guid"`
-	Source      Source     `xml:"source"`
+	Title       string        `xml:"title"`
+	Link        string        `xml:"link"`
+	Description template.HTML `xml:"description"`
+	Author      string        `xml:"author"`
+	Categories  []Category    `xml:"category"`
+	Comments    string        `xml:"comments"`
+	Enclosure   Enclosure     `xml:"enclosure"`
+	GUID        GUID          `xml:"guid"`
+	PubDate     string        `xml:"pubDate"`
+	Source      Source        `xml:"source"`
 }
 
 // Enclosure RSS2.0 enclosure elements
