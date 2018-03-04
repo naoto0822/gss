@@ -1,5 +1,7 @@
 # gss
 
+[![Build Status](https://travis-ci.org/naoto0822/gss.svg?branch=master)](https://travis-ci.org/naoto0822/gss)
+
 rss pkg of go lang.
 
 support
