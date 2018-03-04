@@ -115,5 +115,15 @@ func TestParseRSS2(t *testing.T) {
 }
 
 func TestParseErrorRSS2(t *testing.T) {
-	// TODO
+	path := "../testdata/rss_2.0_error.xml"
+	bytes, err := ioutil.ReadFile(path)
+	if err != nil {
+		t.Error("TestParseErrorRSS2 ioutil.ReadFile returned error:", err)
+	}
+
+	parser := NewParser()
+	feed, err := parser.Parse(bytes)
+	if err == nil {
+		t.Error("TestParseErrorRSS2 Parse not expected return, feed:", feed)
+	}
 }
