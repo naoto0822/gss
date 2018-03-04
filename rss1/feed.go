@@ -1,6 +1,8 @@
 package rss1
 
-import ()
+import (
+	"html/template"
+)
 
 // cf. http://web.resource.org/rss/1.0/spec
 
@@ -30,11 +32,11 @@ type Image struct {
 
 // Item RSS1.0 item
 type Item struct {
-	Title       string `xml:"title"`
-	Link        string `xml:"link"`
-	Description string `xml:"description"`
-	Date        string `xml:"date"`
-	Creator     string `xml:"creator"`
+	Title       string        `xml:"title"`
+	Link        string        `xml:"link"`
+	Description template.HTML `xml:"description"`
+	Date        string        `xml:"date"`
+	Creator     string        `xml:"creator"`
 }
 
 // TextInput RSS1.0 TextInput

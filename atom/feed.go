@@ -1,6 +1,8 @@
 package atom
 
-import ()
+import (
+	"html/template"
+)
 
 // cf. https://tools.ietf.org/html/rfc4287
 
@@ -26,8 +28,9 @@ type Entry struct {
 	Updated      string        `xml:"updated"`
 	Published    string        `xml:"published"`
 	Authors      []Author      `xml:"author"`
-	Summary      string        `xml:"summary"`
+	Summary      template.HTML `xml:"summary"`
 	Contributors []Contributor `xml:"contributor"`
+	Content      template.HTML `xml:"content"`
 }
 
 // Link atom link
