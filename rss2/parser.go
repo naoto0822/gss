@@ -21,5 +21,5 @@ func (p *Parser) Parse(data []byte) (*Feed, error) {
 		return nil, err
 	}
 
-	return feed, nil
+	return &feed, nil
 }
