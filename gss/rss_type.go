@@ -1,11 +1,11 @@
 package gss
 
-// RssType is identifies Feed
-type RssType int
+// RSSType is identifies Feed
+type RSSType int
 
 const (
-	UnknownType RssType = iota
-	Rss1Type
-	Rss2Type
-	AtomType
+	Unknown RSSType = iota
+	RSS1
+	RSS2
+	Atom
 )
