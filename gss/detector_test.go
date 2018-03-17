@@ -5,23 +5,6 @@ import (
 	"testing"
 )
 
-func TestDetectAtom(t *testing.T) {
-	path := "../testdata/atom_1.0.xml"
-	bytes, err := ioutil.ReadFile(path)
-	if err != nil {
-		t.Error("TestDetectAtom ioutil.ReadFile returnd error:", err)
-	}
-
-	detector := NewDetector()
-
-	root, err := detector.detect(bytes)
-	if err != nil {
-		t.Error("TestDetectAtom Detect not expected error:", err)
-	}
-
-	t.Log(root)
-}
-
 func TestDetectRSS1(t *testing.T) {
 	path := "../testdata/rss_1.0.xml"
 	bytes, err := ioutil.ReadFile(path)
@@ -30,12 +13,10 @@ func TestDetectRSS1(t *testing.T) {
 	}
 
 	detector := NewDetector()
-	root, err := detector.detect(bytes)
-	if err != nil {
+	rssType, err := detector.detect(bytes)
+	if err != nil || rssType != RSS1 {
 		t.Error("TestDetectRSS1 Detect not expected error:", err)
 	}
-
-	t.Log(root)
 }
 
 func TestDetectRSS2(t *testing.T) {
@@ -46,10 +27,23 @@ func TestDetectRSS2(t *testing.T) {
 	}
 
 	detector := NewDetector()
-	root, err := detector.detect(bytes)
-	if err != nil {
+	rssType, err := detector.detect(bytes)
+	if err != nil || rssType != RSS2 {
 		t.Error("TestDetectRSS2 Detect not expected error:", err)
 	}
+}
 
-	t.Log(root)
+func TestDetectAtom(t *testing.T) {
+	path := "../testdata/atom_1.0.xml"
+	bytes, err := ioutil.ReadFile(path)
+	if err != nil {
+		t.Error("TestDetectAtom ioutil.ReadFile returnd error:", err)
+	}
+
+	detector := NewDetector()
+
+	rssType, err := detector.detect(bytes)
+	if err != nil || rssType != Atom {
+		t.Error("TestDetectAtom Detect not expected error:", err)
+	}
 }
