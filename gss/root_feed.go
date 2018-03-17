@@ -6,7 +6,7 @@ import ()
 type RootFeed struct {
 	XMLTag  XMLTag  `xml:"xml"`
 	RdfTag  rdfTag  `xml:"RDF"`
-	RssTag  rssTag  `xml:"rss"`
+	RSSTag  rssTag  `xml:"rss"`
 	AtomTag atomTag `xml:"feed"`
 }
 
