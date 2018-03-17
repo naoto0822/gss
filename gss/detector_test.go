@@ -12,7 +12,7 @@ func TestDetectRSS1(t *testing.T) {
 		t.Error("TestDetectRSS1 ioutil.ReadFile returned error:", err)
 	}
 
-	detector := NewDetector()
+	detector := newDetector()
 	rssType, err := detector.detect(bytes)
 	if err != nil || rssType != RSS1 {
 		t.Error("TestDetectRSS1 Detect not expected error:", err)
@@ -26,7 +26,7 @@ func TestDetectRSS2(t *testing.T) {
 		t.Error("TestDetectRSS2 ioutil.ReadFile returned error:", err)
 	}
 
-	detector := NewDetector()
+	detector := newDetector()
 	rssType, err := detector.detect(bytes)
 	if err != nil || rssType != RSS2 {
 		t.Error("TestDetectRSS2 Detect not expected error:", err)
@@ -40,7 +40,7 @@ func TestDetectAtom(t *testing.T) {
 		t.Error("TestDetectAtom ioutil.ReadFile returnd error:", err)
 	}
 
-	detector := NewDetector()
+	detector := newDetector()
 
 	rssType, err := detector.detect(bytes)
 	if err != nil || rssType != Atom {

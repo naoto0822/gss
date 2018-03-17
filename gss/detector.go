@@ -13,12 +13,12 @@ const (
 
 type detector struct{}
 
-func NewDetector() *detector {
+func newDetector() *detector {
 	return &detector{}
 }
 
 func (d *detector) detect(bytes []byte) (RSSType, error) {
-	var root RootFeed
+	var root rootFeed
 	xmlStr := string(bytes)
 
 	// To Unmarshal root elements, gss attach dummy elements to target XML.
@@ -46,21 +46,21 @@ func (d *detector) detect(bytes []byte) (RSSType, error) {
 	return feedType, nil
 }
 
-func (d *detector) isRSS1(root RootFeed) bool {
+func (d *detector) isRSS1(root rootFeed) bool {
 	if root.RdfTag.Xmlns != "" && strings.Contains(root.RdfTag.Xmlns, "rss/1.0") {
 		return true
 	}
 	return false
 }
 
-func (d *detector) isRSS2(root RootFeed) bool {
+func (d *detector) isRSS2(root rootFeed) bool {
 	if root.RSSTag.Version != "" && strings.Contains(root.RSSTag.Version, "2.0") {
 		return true
 	}
 	return false
 }
 
-func (d *detector) isAtom(root RootFeed) bool {
+func (d *detector) isAtom(root rootFeed) bool {
 	if root.AtomTag.Xmlns != "" && strings.Contains(root.AtomTag.Xmlns, "Atom") {
 		return true
 	}
