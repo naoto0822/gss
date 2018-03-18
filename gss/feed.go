@@ -15,7 +15,7 @@ type Feed struct {
 	CopyRight   string   `json:"copyright"`
 	PubDate     string   `json:"pubdate"`
 	Updated     string   `json:"updated"`
-	Authors     []string `json"authors"`
+	Authors     []string `json:"authors"`
 	Categories  []string `json:"categories"`
 	Items       []Item   `json:"items"`
 }
