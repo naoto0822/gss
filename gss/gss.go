@@ -61,7 +61,7 @@ func (c *Client) Feed(url string) (*Feed, error) {
 }
 
 func (c *Client) getParser(rssType RSSType) (*interfaces.Parseable, error) {
-	switch c {
+	switch rssType {
 	case RSS1:
 		return rss1.NewParser(), nil
 	case RSS2:
