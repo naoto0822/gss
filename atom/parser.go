@@ -2,10 +2,13 @@ package atom
 
 import (
 	"encoding/xml"
+
+	"github.com/naoto0822/gss/interfaces"
 )
 
 // Parser atom parser
 type Parser struct {
+	interfaces.Parseable
 }
 
 // Parse run atom feed parsing

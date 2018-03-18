@@ -1,13 +1,17 @@
 package atom
 
 import (
+	"encoding/json"
 	"html/template"
+
+	"github.com/naoto0822/gss/interfaces"
 )
 
 // cf. https://tools.ietf.org/html/rfc4287
 
 // Feed atom feed
 type Feed struct {
+	interfaces.Mappable
 	ID       string   `xml:"id"`
 	Title    string   `xml:"title"`
 	SubTitle string   `xml:"subtitle"`
@@ -50,4 +54,8 @@ type Author struct {
 // Contributor atom contributor
 type Contributor struct {
 	Name string `xml:"name"`
+}
+
+func (f *Feed) ToJSON() ([]byte, error) {
+	return json.Marshal(f)
 }
