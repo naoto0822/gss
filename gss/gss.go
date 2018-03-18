@@ -9,6 +9,7 @@ import (
 	"github.com/naoto0822/gss/session"
 )
 
+// NewClient factory Client
 func NewClient() *Client {
 	detector := newDetector()
 	session := session.NewClient(nil)
@@ -19,12 +20,14 @@ func NewClient() *Client {
 	}
 }
 
+// Client gss Client
 type Client struct {
 	detector *detector
 	session  *session.Client
 }
 
-func (c *Client) Feed(url string) (*Feed, error) {
+// Parse get gss.Result
+func (c *Client) Parse(url string) (*Feed, error) {
 	header := make(map[string]string)
 	bytes, err := c.session.Get(url, header)
 	if err != nil {
