@@ -1,11 +1,15 @@
 package rss2
 
 import (
+	"encoding/json"
 	"html/template"
+
+	"github.com/naoto0822/gss/interfaces"
 )
 
 // Feed RSS2.0 feed
 type Feed struct {
+	interfaces.Mappable
 	Channel Channel `xml:"channel"`
 }
 
@@ -107,4 +111,8 @@ type GUID struct {
 type Source struct {
 	Value string `xml:",chardata"`
 	URL   string `xml:"url,attr"`
+}
+
+func (f *Feed) ToJSON() ([]byte, error) {
+	return json.Marshal(f)
 }
