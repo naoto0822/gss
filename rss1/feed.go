@@ -1,13 +1,17 @@
 package rss1
 
 import (
+	"encoding/json"
 	"html/template"
+
+	"github.com/naoto0822/gss/interfaces"
 )
 
 // cf. http://web.resource.org/rss/1.0/spec
 
 // Feed RSS1.0 feed
 type Feed struct {
+	interfaces.Mappable
 	Channel   Channel   `xml:"channel"`
 	Image     Image     `xml:"image"`
 	Items     []Item    `xml:"item"`
@@ -45,4 +49,8 @@ type TextInput struct {
 	Description string `xml:"description"`
 	Name        string `xml:"name"`
 	Link        string `xml:"link"`
+}
+
+func (f *Feed) ToJSON() ([]byte, error) {
+	return json.Marshal(f)
 }

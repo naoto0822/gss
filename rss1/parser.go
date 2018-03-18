@@ -2,10 +2,14 @@ package rss1
 
 import (
 	"encoding/xml"
+
+	"github.com/naoto0822/gss/interfaces"
 )
 
 // Parser RSS1.0 parser
-type Parser struct{}
+type Parser struct {
+	interfaces.Parseable
+}
 
 // NewParser factory Parser
 func NewParser() *Parser {
