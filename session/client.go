@@ -1,6 +1,7 @@
 package session
 
 import (
+	"io/ioutil"
 	"net/http"
 )
 
@@ -25,7 +26,7 @@ func NewClient(httpClient *http.Client) *Client {
 }
 
 // Get exec HTTP GET
-func (c *Client) Get(url string, header map[string]string) (*http.Response, error) {
+func (c *Client) Get(url string, header map[string]string) ([]byte, error) {
 	req, err := c.newRequest("GET", url, header)
 	if err != nil {
 		return nil, err
@@ -35,8 +36,14 @@ func (c *Client) Get(url string, header map[string]string) (*http.Response, erro
 	if err != nil {
 		return nil, err
 	}
+	defer resp.Body.Close()
 
-	return resp, nil
+	bytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	return bytes, nil
 }
 
 // Do GET only now
