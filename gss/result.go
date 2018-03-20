@@ -2,14 +2,14 @@ package gss
 
 // Result Parser response
 type Result struct {
-	Feed      *Feed
-	RSSType   RSSType
-	isSuccess bool
+	Feed         *Feed
+	RSSType      RSSType
+	isSuccessful bool
 }
 
 // IsSuccess Result is success or error
-func (r *Result) IsSuccess() bool {
-	if r.Feed != nil && r.RSSType != Unknown {
+func (r *Result) IsSuccessful() bool {
+	if r.isSuccess {
 		return true
 	}
 	return false
