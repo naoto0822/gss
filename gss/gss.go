@@ -1,11 +1,6 @@
 package gss
 
 import (
-	"fmt"
-
-	"github.com/naoto0822/gss/atom"
-	"github.com/naoto0822/gss/rss1"
-	"github.com/naoto0822/gss/rss2"
 	"github.com/naoto0822/gss/session"
 )
 
@@ -39,7 +34,7 @@ func (c *Client) Parse(url string) (*Feed, error) {
 		return nil, err
 	}
 
-	parser, err := c.getParser(rssType)
+	parser, err := getParser(rssType)
 	if err != nil {
 		return nil, err
 	}
@@ -61,17 +56,4 @@ func (c *Client) Parse(url string) (*Feed, error) {
 	}
 
 	return &feed, nil
-}
-
-func (c *Client) getParser(rssType RSSType) (*interfaces.Parseable, error) {
-	switch rssType {
-	case RSS1:
-		return rss1.NewParser(), nil
-	case RSS2:
-		return rss2.NewParser(), nil
-	case Atom:
-		return atom.NewParser(), nil
-	default:
-		return nil, fmt.Errorf("not found RSSType")
-	}
 }
