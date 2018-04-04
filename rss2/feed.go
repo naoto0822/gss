@@ -19,7 +19,7 @@ type Channel struct {
 	Link           string     `xml:"link"`
 	Description    string     `xml:"description"`
 	Language       string     `xml:"language"`
-	Copyright      string     `xml:"copyright"`
+	CopyRight      string     `xml:"copyright"`
 	ManagingEditor string     `xml:"managingEditor"`
 	WebMaster      string     `xml:"webMaster"`
 	PubDate        string     `xml:"pubDate"`
@@ -113,6 +113,95 @@ type Source struct {
 	URL   string `xml:"url,attr"`
 }
 
-func (f *Feed) ToJSON() ([]byte, error) {
+// ToJSON implemented interfaces.Mappable
+// convert to gss.Feed
+func (f Feed) ToJSON() ([]byte, error) {
 	return json.Marshal(f)
+}
+
+// MarshalJSON assemble gss.Feed struct
+func (f Feed) MarshalJSON() ([]byte, error) {
+	var links []string
+	links = append(links, f.Channel.Link)
+
+	gf := &struct {
+		Title       string     `json:"title"`
+		Links       []string   `json:"links"`
+		Description string     `json:"description"`
+		Image       Image      `json:"image"`
+		CopyRight   string     `json:"copyright"`
+		PubDate     string     `json:"pubdate"`
+		Updated     string     `json:"updated"`
+		Categories  []Category `json:"categories"`
+		Items       []Item     `json:"items"`
+	}{
+		Title:       f.Channel.Title,
+		Links:       links,
+		Description: f.Channel.Description,
+		Image:       f.Channel.Image,
+		CopyRight:   f.Channel.CopyRight,
+		PubDate:     f.Channel.PubDate,
+		Updated:     f.Channel.LastBuildDate,
+		Categories:  f.Channel.Categories,
+		Items:       f.Channel.Items,
+	}
+	return json.Marshal(gf)
+}
+
+// MarshalJSON assemble gss.Image struct
+func (i Image) MarshalJSON() ([]byte, error) {
+	gi := &struct {
+		Title  string `json:"title"`
+		URL    string `json:"url"`
+		Link   string `json:"link"`
+		Width  int    `json:"width"`
+		Height int    `json:"height"`
+	}{
+		Title:  i.Title,
+		URL:    i.URL,
+		Link:   i.Link,
+		Width:  i.Width,
+		Height: i.Height,
+	}
+	return json.Marshal(gi)
+}
+
+// MarshalJSON assemble gss.Category struct
+func (c Category) MarshalJSON() ([]byte, error) {
+	return json.Marshal(c.Value)
+}
+
+// MarshalJSON assemble gss.Item struct
+func (i Item) MarshalJSON() ([]byte, error) {
+	var links []string
+	links = append(links, i.Link)
+
+	type author struct {
+		Name  string `json:"name"`
+		Email string `json:"email"`
+	}
+	a := author{
+		Name: i.Author,
+	}
+	var authors []author
+	authors = append(authors, a)
+
+	gi := &struct {
+		ID         string        `json:"id"`
+		Title      string        `json:"title"`
+		Links      []string      `json:"links"`
+		Body       template.HTML `json:"body"`
+		PubDate    string        `json:"pubdate"`
+		Authors    []author      `json:"authors"`
+		Categories []Category    `json:"categories"`
+	}{
+		ID:         i.GUID.Value,
+		Title:      i.Title,
+		Links:      links,
+		Body:       i.Description,
+		PubDate:    i.PubDate,
+		Authors:    authors,
+		Categories: i.Categories,
+	}
+	return json.Marshal(gi)
 }

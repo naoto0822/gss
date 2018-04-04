@@ -8,7 +8,7 @@ import (
 // Feed gss original feed
 type Feed struct {
 	RSSType     RSSType
-	Name        string   `json:"name"`
+	Title       string   `json:"title"`
 	Link        []string `json:"link"`
 	Description string   `json:"description"`
 	Image       Image    `json:"image"`
