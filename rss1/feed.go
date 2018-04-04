@@ -4,14 +4,14 @@ import (
 	"encoding/json"
 	"html/template"
 
-	"github.com/naoto0822/gss/interfaces"
+	_ "github.com/naoto0822/gss/interfaces"
 )
 
 // cf. http://web.resource.org/rss/1.0/spec
 
 // Feed RSS1.0 feed
 type Feed struct {
-	interfaces.Mappable
+	// interfaces.Mappable
 	Channel   Channel   `xml:"channel"`
 	Image     Image     `xml:"image"`
 	Items     []Item    `xml:"item"`
@@ -51,6 +51,73 @@ type TextInput struct {
 	Link        string `xml:"link"`
 }
 
-func (f *Feed) ToJSON() ([]byte, error) {
+// ToJSON implemented interfaces.Mappable.
+// convert to map gss.Feed.
+func (f Feed) ToJSON() ([]byte, error) {
 	return json.Marshal(f)
+}
+
+// MarshalJSON assemble gss.Feed struct
+func (f Feed) MarshalJSON() ([]byte, error) {
+	gf := &struct {
+		Title       string `json:"title"`
+		Link        string `json:"link"`
+		Description string `json:"description"`
+		Image       Image  `json:"image"`
+		PubDate     string `json:"pubdate"`
+		Items       []Item `json:"items"`
+	}{
+		Title:       f.Channel.Title,
+		Link:        f.Channel.Link,
+		Description: f.Channel.Description,
+		Image:       f.Image,
+		PubDate:     f.Channel.Date,
+		Items:       f.Items,
+	}
+	return json.Marshal(gf)
+}
+
+// MarshalJSON assemble gss.Image struct
+func (i Image) MarshalJSON() ([]byte, error) {
+	gi := &struct {
+		Title string `json:"title"`
+		URL   string `json:"url"`
+		Link  string `json:"link"`
+	}{
+		Title: i.Title,
+		URL:   i.URL,
+		Link:  i.Link,
+	}
+	return json.Marshal(gi)
+}
+
+// MarshalJSON assemble gss.Item struct
+func (i Item) MarshalJSON() ([]byte, error) {
+	var links []string
+	links = append(links, i.Link)
+
+	type author struct {
+		Name  string `json:"name"`
+		Email string `json:"email"`
+	}
+	a := author{
+		Name: i.Creator,
+	}
+	var authors []author
+	authors = append(authors, a)
+
+	gi := &struct {
+		Title   string        `json:"title"`
+		Links   []string      `json:"links"`
+		Body    template.HTML `json:"body"`
+		PubDate string        `json:"pubdate"`
+		Authors []author      `json:"authors"`
+	}{
+		Title:   i.Title,
+		Links:   links,
+		Body:    i.Description,
+		PubDate: i.Date,
+		Authors: authors,
+	}
+	return json.Marshal(gi)
 }
