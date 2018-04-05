@@ -11,7 +11,6 @@ import (
 
 // Feed atom feed
 type Feed struct {
-	// interfaces.Mappable
 	ID       string   `xml:"id"`
 	Title    string   `xml:"title"`
 	SubTitle string   `xml:"subtitle"`

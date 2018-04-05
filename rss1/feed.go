@@ -11,7 +11,6 @@ import (
 
 // Feed RSS1.0 feed
 type Feed struct {
-	// interfaces.Mappable
 	Channel   Channel   `xml:"channel"`
 	Image     Image     `xml:"image"`
 	Items     []Item    `xml:"item"`

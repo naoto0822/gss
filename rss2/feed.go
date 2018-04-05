@@ -4,12 +4,11 @@ import (
 	"encoding/json"
 	"html/template"
 
-	"github.com/naoto0822/gss/interfaces"
+	_ "github.com/naoto0822/gss/interfaces"
 )
 
 // Feed RSS2.0 feed
 type Feed struct {
-	interfaces.Mappable
 	Channel Channel `xml:"channel"`
 }
 
