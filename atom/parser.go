@@ -7,9 +7,7 @@ import (
 )
 
 // Parser atom parser
-type Parser struct {
-	interfaces.Parseable
-}
+type Parser struct{}
 
 // NewParser factory Parser
 func NewParser() *Parser {

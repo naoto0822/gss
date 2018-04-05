@@ -7,9 +7,7 @@ import (
 )
 
 // Parser RSS2.0 Parser
-type Parser struct {
-	interfaces.Parseable
-}
+type Parser struct{}
 
 // NewParser factory Parser
 func NewParser() *Parser {
