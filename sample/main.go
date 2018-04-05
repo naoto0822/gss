@@ -17,5 +17,5 @@ func main() {
 		fmt.Errorf("error:", err)
 	}
 
-	fmt.Println("feed: " + feed)
+	fmt.Println("feed: ", feed)
 }

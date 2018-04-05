@@ -17,7 +17,7 @@ func NewParser() *Parser {
 }
 
 // Parse Rss2.0 feed parse
-func (p *Parser) Parse(data []byte) (*Feed, error) {
+func (p *Parser) Parse(data []byte) (interfaces.Mappable, error) {
 	var feed Feed
 
 	err := xml.Unmarshal(data, &feed)
@@ -25,5 +25,5 @@ func (p *Parser) Parse(data []byte) (*Feed, error) {
 		return nil, err
 	}
 
-	return &feed, nil
+	return feed, nil
 }

@@ -9,7 +9,7 @@ type Result struct {
 
 // IsSuccessful Result is success or error
 func (r *Result) IsSuccessful() bool {
-	if r.isSuccess {
+	if r.isSuccessful {
 		return true
 	}
 	return false

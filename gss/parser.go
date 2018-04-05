@@ -9,7 +9,7 @@ import (
 	"github.com/naoto0822/gss/rss2"
 )
 
-func getParser(rssType RSSType) (*interfaces.Parseable, error) {
+func getParser(rssType RSSType) (interfaces.Parseable, error) {
 	switch rssType {
 	case RSS1:
 		return rss1.NewParser(), nil

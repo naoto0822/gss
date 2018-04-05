@@ -44,13 +44,13 @@ func (c *Client) Parse(url string) (*Feed, error) {
 		return nil, err
 	}
 
-	bytes, err := mappableFeed.ToJSON()
+	feedBytes, err := mappableFeed.ToJSON()
 	if err != nil {
 		return nil, err
 	}
 
 	feed := Feed{}
-	err := feed.Map(bytes)
+	err = feed.Map(feedBytes)
 	if err != nil {
 		return nil, err
 	}
