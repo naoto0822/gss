@@ -59,16 +59,18 @@ func (f Feed) ToJSON() ([]byte, error) {
 
 // MarshalJSON assemble gss.Feed struct
 func (f Feed) MarshalJSON() ([]byte, error) {
+	links := []string{f.Channel.Link}
+
 	gf := &struct {
-		Title       string `json:"title"`
-		Link        string `json:"link"`
-		Description string `json:"description"`
-		Image       Image  `json:"image"`
-		PubDate     string `json:"pubdate"`
-		Items       []Item `json:"items"`
+		Title       string   `json:"title"`
+		Links       []string `json:"links"`
+		Description string   `json:"description"`
+		Image       Image    `json:"image"`
+		PubDate     string   `json:"pubdate"`
+		Items       []Item   `json:"items"`
 	}{
 		Title:       f.Channel.Title,
-		Link:        f.Channel.Link,
+		Links:       links,
 		Description: f.Channel.Description,
 		Image:       f.Image,
 		PubDate:     f.Channel.Date,
