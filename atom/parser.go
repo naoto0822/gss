@@ -11,6 +11,11 @@ type Parser struct {
 	interfaces.Parseable
 }
 
+// NewParser factory Parser
+func NewParser() *Parser {
+	return &Parser{}
+}
+
 // Parse run atom feed parsing
 func (p *Parser) Parse(data []byte) (*Feed, error) {
 	var feed Feed
