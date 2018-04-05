@@ -2,27 +2,20 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 
-	"github.com/naoto0822/gss/atom"
+	"github.com/naoto0822/gss/gss"
 )
 
 func main() {
 	fmt.Println("hello go-rss!")
 
-	path := "../testdata/atom_1.0.xml"
-	data, err := ioutil.ReadFile(path)
-	if err != nil {
-		fmt.Errorf("failure read xml file")
-	}
-
-	parser := atom.Parser{}
-	feed, err := parser.Parse(data)
+	url := "https://jp.techcrunch.com/feed/"
+	client := gss.NewClient()
+	feed, err := client.Parse(url)
 
 	if err != nil {
-		fmt.Errorf("failure parse atom xml")
+		fmt.Errorf("error:", err)
 	}
 
-	fmt.Println("feed:", feed)
-	fmt.Println("feed.Title:", feed.ID)
+	fmt.Println("feed: " + feed)
 }
