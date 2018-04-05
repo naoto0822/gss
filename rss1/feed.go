@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"html/template"
 
+	// implment interfaces.Mappable
 	_ "github.com/naoto0822/gss/interfaces"
 )
 

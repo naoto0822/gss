@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"html/template"
 
+	// implement interfaces.Mappable
 	_ "github.com/naoto0822/gss/interfaces"
 )
 
@@ -109,7 +110,7 @@ func (a Author) MarshalJSON() ([]byte, error) {
 
 // MarshalJSON assemble gss.Item
 func (e Entry) MarshalJSON() ([]byte, error) {
-	var body template.HTML = ""
+	var body template.HTML
 	if e.Summary != "" {
 		body = e.Summary
 	}
