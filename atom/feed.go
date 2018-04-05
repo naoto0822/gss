@@ -4,14 +4,14 @@ import (
 	"encoding/json"
 	"html/template"
 
-	"github.com/naoto0822/gss/interfaces"
+	_ "github.com/naoto0822/gss/interfaces"
 )
 
 // cf. https://tools.ietf.org/html/rfc4287
 
 // Feed atom feed
 type Feed struct {
-	interfaces.Mappable
+	// interfaces.Mappable
 	ID       string   `xml:"id"`
 	Title    string   `xml:"title"`
 	SubTitle string   `xml:"subtitle"`
@@ -56,6 +56,84 @@ type Contributor struct {
 	Name string `xml:"name"`
 }
 
-func (f *Feed) ToJSON() ([]byte, error) {
+// ToJSON implmented interfaces.Mappable
+// convert to map gss.Feed
+func (f Feed) ToJSON() ([]byte, error) {
 	return json.Marshal(f)
+}
+
+// MarshalJSON assemble gss.Feed
+func (f Feed) MarshalJSON() ([]byte, error) {
+	type image struct {
+		URL string `json:"url"`
+	}
+	i := image{URL: f.Logo}
+
+	gf := &struct {
+		Title       string   `json:"title"`
+		Links       []Link   `json:"links"`
+		Description string   `json:"description"`
+		Updated     string   `json:"updated"`
+		Authors     []Author `json:"authors"`
+		Image       image    `json:"image"`
+		CopyRight   string   `json:"copyright"`
+		Items       []Entry  `json:"items"`
+	}{
+		Title:       f.Title,
+		Links:       f.Links,
+		Description: f.SubTitle,
+		Updated:     f.Updated,
+		Authors:     f.Authors,
+		Image:       i,
+		CopyRight:   f.Rights,
+		Items:       f.Entries,
+	}
+	return json.Marshal(gf)
+}
+
+// MarshalJSON assemble gss Link
+func (l Link) MarshalJSON() ([]byte, error) {
+	return json.Marshal(l.Href)
+}
+
+// MarshalJSON assemble gss.Author
+func (a Author) MarshalJSON() ([]byte, error) {
+	ga := &struct {
+		Name  string `json:"name"`
+		Email string `json:"email"`
+	}{
+		Name:  a.Name,
+		Email: a.Email,
+	}
+	return json.Marshal(ga)
+}
+
+// MarshalJSON assemble gss.Item
+func (e Entry) MarshalJSON() ([]byte, error) {
+	var body template.HTML = ""
+	if e.Summary != "" {
+		body = e.Summary
+	}
+	if e.Content != "" {
+		body = e.Content
+	}
+
+	gi := &struct {
+		ID      string        `json:"id"`
+		Title   string        `json:"title"`
+		Links   []Link        `json:"links"`
+		Body    template.HTML `json:"body"`
+		PubDate string        `json:"pubdate"`
+		Updated string        `json:"updated"`
+		Authors []Author      `json:"authors"`
+	}{
+		ID:      e.ID,
+		Title:   e.Title,
+		Links:   e.Links,
+		Body:    body,
+		PubDate: e.Published,
+		Updated: e.Updated,
+		Authors: e.Authors,
+	}
+	return json.Marshal(gi)
 }

@@ -9,13 +9,13 @@ import (
 type Feed struct {
 	RSSType     RSSType
 	Title       string   `json:"title"`
-	Link        []string `json:"link"`
+	Links       []string `json:"links"`
 	Description string   `json:"description"`
 	Image       Image    `json:"image"`
 	CopyRight   string   `json:"copyright"`
 	PubDate     string   `json:"pubdate"`
 	Updated     string   `json:"updated"`
-	Authors     []string `json:"authors"`
+	Authors     []Author `json:"authors"`
 	Categories  []string `json:"categories"`
 	Items       []Item   `json:"items"`
 }
