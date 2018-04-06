@@ -69,6 +69,16 @@ func (f Feed) MarshalJSON() ([]byte, error) {
 	}
 	i := image{URL: f.Logo}
 
+	var links []Link
+	if len(f.Links) > 0 {
+		links = f.Links
+	}
+
+	var authors []Author
+	if len(f.Authors) > 0 {
+		authors = f.Authors
+	}
+
 	gf := &struct {
 		Title       string   `json:"title"`
 		Links       []Link   `json:"links"`
@@ -80,10 +90,10 @@ func (f Feed) MarshalJSON() ([]byte, error) {
 		Items       []Entry  `json:"items"`
 	}{
 		Title:       f.Title,
-		Links:       f.Links,
+		Links:       links,
 		Description: f.SubTitle,
 		Updated:     f.Updated,
-		Authors:     f.Authors,
+		Authors:     authors,
 		Image:       i,
 		CopyRight:   f.Rights,
 		Items:       f.Entries,
@@ -118,6 +128,16 @@ func (e Entry) MarshalJSON() ([]byte, error) {
 		body = e.Content
 	}
 
+	var links []Link
+	if len(e.Links) > 0 {
+		links = e.Links
+	}
+
+	var authors []Author
+	if len(e.Authors) > 0 {
+		authors = e.Authors
+	}
+
 	gi := &struct {
 		ID      string        `json:"id"`
 		Title   string        `json:"title"`
@@ -129,11 +149,11 @@ func (e Entry) MarshalJSON() ([]byte, error) {
 	}{
 		ID:      e.ID,
 		Title:   e.Title,
-		Links:   e.Links,
+		Links:   links,
 		Body:    body,
 		PubDate: e.Published,
 		Updated: e.Updated,
-		Authors: e.Authors,
+		Authors: authors,
 	}
 	return json.Marshal(gi)
 }

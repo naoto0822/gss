@@ -7,6 +7,11 @@ type Result struct {
 	isSuccessful bool
 }
 
+// newResult init Result
+func newResult() Result {
+	return Result{}
+}
+
 // IsSuccessful Result is success or error
 func (r *Result) IsSuccessful() bool {
 	if r.isSuccessful {

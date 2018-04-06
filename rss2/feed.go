@@ -174,7 +174,9 @@ func (c Category) MarshalJSON() ([]byte, error) {
 // MarshalJSON assemble gss.Item struct
 func (i Item) MarshalJSON() ([]byte, error) {
 	var links []string
-	links = append(links, i.Link)
+	if i.Link != "" {
+		links = append(links, i.Link)
+	}
 
 	type author struct {
 		Name  string `json:"name"`
@@ -184,7 +186,9 @@ func (i Item) MarshalJSON() ([]byte, error) {
 		Name: i.Author,
 	}
 	var authors []author
-	authors = append(authors, a)
+	if a.Name != "" {
+		authors = append(authors, a)
+	}
 
 	gi := &struct {
 		ID         string        `json:"id"`
