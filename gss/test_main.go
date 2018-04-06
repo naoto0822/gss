@@ -5,6 +5,7 @@ import (
 	"testing"
 )
 
+// TestMain test setup and teardown
 func TestMain(m *testing.M) {
 	// TODO: setup
 	code := m.Run()
