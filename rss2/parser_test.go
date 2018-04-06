@@ -105,12 +105,12 @@ func TestParseRSS2(t *testing.T) {
 		Items:          items,
 	}
 
-	want := &Feed{
+	want := Feed{
 		Channel: channel,
 	}
 
 	if !reflect.DeepEqual(feed, want) {
-		t.Error("TestParseRSS2 not match")
+		t.Error("TestParseRSS2 not match, ", feed, want)
 	}
 }
 

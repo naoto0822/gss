@@ -85,7 +85,7 @@ func TestParseAtom(t *testing.T) {
 	}
 	authors = append(authors, author)
 
-	want := &Feed{
+	want := Feed{
 		ID:       "urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6",
 		Title:    "Example Feed",
 		SubTitle: "This is Sub title",

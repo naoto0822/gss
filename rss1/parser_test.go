@@ -73,7 +73,7 @@ func TestParseRSS1(t *testing.T) {
 		Link:        "http://search.xml.com",
 	}
 
-	want := &Feed{
+	want := Feed{
 		Channel:   channel,
 		Image:     image,
 		Items:     items,
@@ -81,7 +81,7 @@ func TestParseRSS1(t *testing.T) {
 	}
 
 	if !reflect.DeepEqual(feed, want) {
-		t.Error("TestParseRSS1 Parse not match Feed struct")
+		t.Error("TestParseRSS1 Parse not match Feed struct, ", feed, want)
 	}
 }
 
