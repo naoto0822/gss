@@ -7,7 +7,44 @@
 
 rss pkg of go lang.
 
-support
+### support
 - [Atom](https://tools.ietf.org/html/rfc4287)
 - [RSS1.0](http://web.resource.org/rss/1.0/spec)
 - [RSS2.0](https://cyber.harvard.edu/rss/rss.html)
+
+## Installing
+
+To parse rss
+
+```sh
+$ go get github.com/naoto0822/gss/gss
+```
+
+## Usage
+
+### Parse RSS feed
+
+```go
+import "github.com/naoto0822/gss/gss"
+```
+
+Construct a new gss client, then use the `Parse` on the client to parse RSS feed. 
+
+```go
+url := "https://jp.techcrunch.com/feed/"
+client := gss.NewClient()
+feed, err := client.Parse(url)
+```
+
+### Generate Feed
+
+> feature...
+
+## Features
+
+- generating feed
+
+## License
+
+This library is distributed under the MIT-style license found in the [LICENSE](./LICENSE)
+file.
