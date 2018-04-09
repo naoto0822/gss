@@ -59,7 +59,10 @@ func (f Feed) ToJSON() ([]byte, error) {
 
 // MarshalJSON assemble gss.Feed struct
 func (f Feed) MarshalJSON() ([]byte, error) {
-	links := []string{f.Channel.Link}
+	var links []string
+	if f.Channel.Link != "" {
+		links = append(links, f.Channel.Link)
+	}
 
 	gf := &struct {
 		Title       string   `json:"title"`
@@ -96,7 +99,9 @@ func (i Image) MarshalJSON() ([]byte, error) {
 // MarshalJSON assemble gss.Item struct
 func (i Item) MarshalJSON() ([]byte, error) {
 	var links []string
-	links = append(links, i.Link)
+	if i.Link != "" {
+		links = append(links, i.Link)
+	}
 
 	type author struct {
 		Name  string `json:"name"`
@@ -106,7 +111,9 @@ func (i Item) MarshalJSON() ([]byte, error) {
 		Name: i.Creator,
 	}
 	var authors []author
-	authors = append(authors, a)
+	if a.Name != "" {
+		authors = append(authors, a)
+	}
 
 	gi := &struct {
 		Title   string        `json:"title"`

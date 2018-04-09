@@ -122,7 +122,14 @@ func (f Feed) ToJSON() ([]byte, error) {
 // MarshalJSON assemble gss.Feed struct
 func (f Feed) MarshalJSON() ([]byte, error) {
 	var links []string
-	links = append(links, f.Channel.Link)
+	if f.Channel.Link != "" {
+		links = append(links, f.Channel.Link)
+	}
+
+	var categories []Category
+	if len(f.Channel.Categories) > 0 {
+		categories = f.Channel.Categories
+	}
 
 	gf := &struct {
 		Title       string     `json:"title"`
@@ -142,7 +149,7 @@ func (f Feed) MarshalJSON() ([]byte, error) {
 		CopyRight:   f.Channel.CopyRight,
 		PubDate:     f.Channel.PubDate,
 		Updated:     f.Channel.LastBuildDate,
-		Categories:  f.Channel.Categories,
+		Categories:  categories,
 		Items:       f.Channel.Items,
 	}
 	return json.Marshal(gf)
