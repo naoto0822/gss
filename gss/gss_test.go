@@ -76,6 +76,7 @@ func TestFeedRSS1(t *testing.T) {
 	links := []string{"http://xml.com/pub"}
 
 	want := &Feed{
+		RSSType:     RSS1,
 		Title:       "Channel Title",
 		Links:       links,
 		Description: "this is description.",
@@ -172,6 +173,7 @@ func TestFeedRSS2(t *testing.T) {
 
 	links := []string{"http://liftoff.msfc.nasa.gov/"}
 	want := &Feed{
+		RSSType:     RSS2,
 		Title:       "Liftoff News",
 		Links:       links,
 		Description: "Liftoff to Space Exploration.",
@@ -265,6 +267,7 @@ func TestFeedAtom(t *testing.T) {
 	}
 
 	want := &Feed{
+		RSSType:     Atom,
 		Title:       "Example Feed",
 		Links:       links,
 		Description: "This is Sub title",

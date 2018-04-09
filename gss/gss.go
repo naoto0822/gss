@@ -55,5 +55,6 @@ func (c *Client) Parse(url string) (*Feed, error) {
 		return nil, err
 	}
 
+	feed.RSSType = rssType
 	return &feed, nil
 }
