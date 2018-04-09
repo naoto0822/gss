@@ -28,7 +28,8 @@ $ go get github.com/naoto0822/gss/gss
 import "github.com/naoto0822/gss/gss"
 ```
 
-Construct a new gss client, then use the `Parse` on the client to parse RSS feed. 
+Construct a new gss client, then use the `Parse` on the client to parse RSS feed.  
+`Parse` returned `gss.Feed`.
 
 ```go
 url := "https://jp.techcrunch.com/feed/"
@@ -39,6 +40,49 @@ feed, err := client.Parse(url)
 ### Generate Feed
 
 > feature...
+
+## Model Preview
+
+`gss.Feed` is original and universal feed.  
+refer [GoDoc](https://godoc.org/github.com/naoto0822/gss/gss#Feed) for details.
+
+> TODO: rewrite following table style...
+
+```go
+feed
+feed.RSSType
+feed.Title
+feed.Links
+feed.Description
+feed.Image
+feed.CopyRight
+feed.PubDate
+feed.Updated
+feed.Authors
+feed.Categories
+feed.Items
+
+image
+image.Title
+image.URL
+image.Link
+image.Width
+image.Height
+
+item
+item.ID
+item.Title
+item.Links
+item.Body
+item.PubDate
+item.Updated
+item.Authors
+item.Categories
+
+author
+author.Name
+author.Email
+```
 
 ## Features
 
