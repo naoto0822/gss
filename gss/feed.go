@@ -31,14 +31,24 @@ type Image struct {
 
 // Item gss item
 type Item struct {
-	ID         string        `json:"id"`
-	Title      string        `json:"title"`
-	Links      []string      `json:"links"`
-	Body       template.HTML `json:"body"`
-	PubDate    string        `json:"pubdate"`
-	Updated    string        `json:"updated"`
-	Authors    []Author      `json:"authors"`
-	Categories []string      `json:"categories"`
+	ID          string        `json:"id"`
+	Title       string        `json:"title"`
+	Links       []string      `json:"links"`
+	Description template.HTML `json:"description"`
+	Content     template.HTML `json:"content"`
+	PubDate     string        `json:"pubdate"`
+	Updated     string        `json:"updated"`
+	Authors     []Author      `json:"authors"`
+	Categories  []string      `json:"categories"`
+	Image       Image         `json:"image"`
+	Enclosure   Enclosure     `json:"enclosure"`
+}
+
+// Enclosure gss enclosure
+type Enclosure struct {
+	URL    string `json:"url"`
+	Length int64  `json:"length"`
+	Type   string `json:"type"`
 }
 
 // Author gss author
