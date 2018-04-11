@@ -5,7 +5,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/naoto0822/gss)](https://goreportcard.com/report/github.com/naoto0822/gss)
 [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/naoto0822/gss/blob/master/LICENSE)
 
-rss pkg of go lang.
+Parsing RSS by Go.
 
 ### support
 - [Atom](https://tools.ietf.org/html/rfc4287)
@@ -86,9 +86,11 @@ author.Email
 
 ## Features
 
-- [ ] support [Content](http://web.resource.org/rss/1.0/modules/content/) module only encode
-- [ ] support [Dublin Core](http://web.resource.org/rss/1.0/modules/dc/) module
-- [ ] generating feed
+- [ ] handle atom text by type
+- [ ] rename rss1 -> rdf, rss2 -> rss
+- [ ] support [Content module](http://web.resource.org/rss/1.0/modules/content/) only encode
+- [ ] support [Dublin Core module](http://web.resource.org/rss/1.0/modules/dc/)
+- [ ] support [Media module](http://www.rssboard.org/media-rss) only part element
 
 ## License
 
