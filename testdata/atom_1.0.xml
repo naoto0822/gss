@@ -35,7 +35,9 @@
     <link href="http://example.org/2003/12/13/atom03"/>
     <updated>2003-12-13T18:30:02Z</updated>
     <published>2018-12-13T08:29:29-04:00</published>
-    <summary>Some text.</summary>
+    <category term="Music" scheme="http://xmlns.com/wordnet/1.6/" label="音楽"/>
+    <category term="Sports" scheme="http://xmlns.com/wordnet/1.6/" label="スポーツ"/>
+    <content type="html">ATT bought &amp;lt;b&amp;gt;by SBC&amp;lt;/b&amp;gt;!</content>
   </entry>
 
 </feed>
