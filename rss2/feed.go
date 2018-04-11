@@ -92,6 +92,8 @@ type Item struct {
 	GUID        GUID          `xml:"guid"`
 	PubDate     string        `xml:"pubDate"`
 	Source      Source        `xml:"source"`
+	// Content this is Content Module
+	Content template.HTML `xml:"encoded"`
 }
 
 // Enclosure RSS2.0 enclosure elements
@@ -216,6 +218,7 @@ func (i Item) MarshalJSON() ([]byte, error) {
 		Title       string        `json:"title"`
 		Links       []string      `json:"links"`
 		Description template.HTML `json:"description"`
+		Content     template.HTML `json:"content"`
 		PubDate     string        `json:"pubdate"`
 		Authors     []author      `json:"authors"`
 		Categories  []Category    `json:"categories"`
@@ -225,6 +228,7 @@ func (i Item) MarshalJSON() ([]byte, error) {
 		Title:       i.Title,
 		Links:       links,
 		Description: i.Description,
+		Content:     i.Content,
 		PubDate:     i.PubDate,
 		Authors:     authors,
 		Categories:  i.Categories,

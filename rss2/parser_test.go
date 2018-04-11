@@ -46,6 +46,7 @@ func TestParseRSS2(t *testing.T) {
 		Description: desc1,
 		PubDate:     "Tue, 03 Jun 2003 09:39:21 GMT",
 		GUID:        guid1,
+		Content:     "This is <i>italics</i>.",
 	}
 
 	guid2 := GUID{
@@ -71,6 +72,7 @@ func TestParseRSS2(t *testing.T) {
 		Description: "Before man travels to Mars, NASA hopes to design new engines that will let us fly through the Solar System more quickly. The proposed VASIMR engine would do that.",
 		PubDate:     "Tue, 27 May 2003 08:37:32 GMT",
 		GUID:        guid3,
+		Content:     "This is <b>bold</b>.",
 	}
 
 	guid4 := GUID{
