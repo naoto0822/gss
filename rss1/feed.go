@@ -23,8 +23,10 @@ type Channel struct {
 	Title       string `xml:"title"`
 	Link        string `xml:"link"`
 	Description string `xml:"description"`
-	Date        string `xml:"date"`
-	Language    string `xml:"language"`
+	// Date this is Dunblin Core
+	Date string `xml:"date"`
+	// Language this is Dunblin Core
+	Language string `xml:"language"`
 }
 
 // Image RSS1.0 image
@@ -39,8 +41,10 @@ type Item struct {
 	Title       string        `xml:"title"`
 	Link        string        `xml:"link"`
 	Description template.HTML `xml:"description"`
-	Date        string        `xml:"date"`
-	Creator     string        `xml:"creator"`
+	// Date this is Dunblin Core
+	Date string `xml:"date"`
+	// Creator this is Dunblin Core
+	Creator string `xml:"creator"`
 }
 
 // TextInput RSS1.0 TextInput
@@ -116,17 +120,17 @@ func (i Item) MarshalJSON() ([]byte, error) {
 	}
 
 	gi := &struct {
-		Title   string        `json:"title"`
-		Links   []string      `json:"links"`
-		Body    template.HTML `json:"body"`
-		PubDate string        `json:"pubdate"`
-		Authors []author      `json:"authors"`
+		Title       string        `json:"title"`
+		Links       []string      `json:"links"`
+		Description template.HTML `json:"description"`
+		PubDate     string        `json:"pubdate"`
+		Authors     []author      `json:"authors"`
 	}{
-		Title:   i.Title,
-		Links:   links,
-		Body:    i.Description,
-		PubDate: i.Date,
-		Authors: authors,
+		Title:       i.Title,
+		Links:       links,
+		Description: i.Description,
+		PubDate:     i.Date,
+		Authors:     authors,
 	}
 	return json.Marshal(gi)
 }
