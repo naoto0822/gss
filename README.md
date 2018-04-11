@@ -86,8 +86,9 @@ author.Email
 
 ## Features
 
-- support [Dublin Core](http://web.resource.org/rss/1.0/modules/dc/)
-- generating feed
+- [ ] support [Content](http://web.resource.org/rss/1.0/modules/content/) module only encode
+- [ ] support [Dublin Core](http://web.resource.org/rss/1.0/modules/dc/) module
+- [ ] generating feed
 
 ## License
 
