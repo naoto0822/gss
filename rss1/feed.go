@@ -2,7 +2,6 @@ package rss1
 
 import (
 	"encoding/json"
-	"html/template"
 
 	// implment interfaces.Mappable
 	_ "github.com/naoto0822/gss/interfaces"
@@ -38,9 +37,9 @@ type Image struct {
 
 // Item RSS1.0 item
 type Item struct {
-	Title       string        `xml:"title"`
-	Link        string        `xml:"link"`
-	Description template.HTML `xml:"description"`
+	Title       string `xml:"title"`
+	Link        string `xml:"link"`
+	Description string `xml:"description"`
 	// Date this is Dunblin Core
 	Date string `xml:"date"`
 	// Creator this is Dunblin Core
@@ -120,11 +119,11 @@ func (i Item) MarshalJSON() ([]byte, error) {
 	}
 
 	gi := &struct {
-		Title       string        `json:"title"`
-		Links       []string      `json:"links"`
-		Description template.HTML `json:"description"`
-		PubDate     string        `json:"pubdate"`
-		Authors     []author      `json:"authors"`
+		Title       string   `json:"title"`
+		Links       []string `json:"links"`
+		Description string   `json:"description"`
+		PubDate     string   `json:"pubdate"`
+		Authors     []author `json:"authors"`
 	}{
 		Title:       i.Title,
 		Links:       links,
