@@ -2,7 +2,6 @@ package atom
 
 import (
 	"encoding/json"
-	"html/template"
 
 	// implement interfaces.Mappable
 	_ "github.com/naoto0822/gss/interfaces"
@@ -35,9 +34,9 @@ type Entry struct {
 	Published    string        `xml:"published"`
 	Authors      []Author      `xml:"author"`
 	Categories   []Category    `xml:"category"`
-	Summary      template.HTML `xml:"summary"`
+	Summary      string        `xml:"summary"`
 	Contributors []Contributor `xml:"contributor"`
-	Content      template.HTML `xml:"content"`
+	Content      string        `xml:"content"`
 }
 
 // Link atom link
@@ -150,15 +149,15 @@ func (e Entry) MarshalJSON() ([]byte, error) {
 	}
 
 	gi := &struct {
-		ID          string        `json:"id"`
-		Title       string        `json:"title"`
-		Links       []Link        `json:"links"`
-		Description template.HTML `json:"description"`
-		Content     template.HTML `json:"content"`
-		PubDate     string        `json:"pubdate"`
-		Updated     string        `json:"updated"`
-		Authors     []Author      `json:"authors"`
-		Categories  []Category    `json:"categories"`
+		ID          string     `json:"id"`
+		Title       string     `json:"title"`
+		Links       []Link     `json:"links"`
+		Description string     `json:"description"`
+		Content     string     `json:"content"`
+		PubDate     string     `json:"pubdate"`
+		Updated     string     `json:"updated"`
+		Authors     []Author   `json:"authors"`
+		Categories  []Category `json:"categories"`
 	}{
 		ID:          e.ID,
 		Title:       e.Title,
