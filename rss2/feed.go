@@ -122,11 +122,6 @@ func (f Feed) ToJSON() ([]byte, error) {
 
 // MarshalJSON assemble gss.Feed struct
 func (f Feed) MarshalJSON() ([]byte, error) {
-	var links []string
-	if f.Channel.Link != "" {
-		links = append(links, f.Channel.Link)
-	}
-
 	var categories []Category
 	if len(f.Channel.Categories) > 0 {
 		categories = f.Channel.Categories
@@ -134,7 +129,7 @@ func (f Feed) MarshalJSON() ([]byte, error) {
 
 	gf := &struct {
 		Title       string     `json:"title"`
-		Links       []string   `json:"links"`
+		Link        string     `json:"link"`
 		Description string     `json:"description"`
 		Image       Image      `json:"image"`
 		CopyRight   string     `json:"copyright"`
@@ -144,7 +139,7 @@ func (f Feed) MarshalJSON() ([]byte, error) {
 		Items       []Item     `json:"items"`
 	}{
 		Title:       f.Channel.Title,
-		Links:       links,
+		Link:        f.Channel.Link,
 		Description: f.Channel.Description,
 		Image:       f.Channel.Image,
 		CopyRight:   f.Channel.CopyRight,
@@ -195,11 +190,6 @@ func (e Enclosure) MarshalJSON() ([]byte, error) {
 
 // MarshalJSON assemble gss.Item struct
 func (i Item) MarshalJSON() ([]byte, error) {
-	var links []string
-	if i.Link != "" {
-		links = append(links, i.Link)
-	}
-
 	type author struct {
 		Name  string `json:"name"`
 		Email string `json:"email"`
@@ -215,7 +205,7 @@ func (i Item) MarshalJSON() ([]byte, error) {
 	gi := &struct {
 		ID          string     `json:"id"`
 		Title       string     `json:"title"`
-		Links       []string   `json:"links"`
+		Link        string     `json:"link"`
 		Description string     `json:"description"`
 		Content     string     `json:"content"`
 		PubDate     string     `json:"pubdate"`
@@ -225,7 +215,7 @@ func (i Item) MarshalJSON() ([]byte, error) {
 	}{
 		ID:          i.GUID.Value,
 		Title:       i.Title,
-		Links:       links,
+		Link:        i.Link,
 		Description: i.Description,
 		Content:     i.Content,
 		PubDate:     i.PubDate,

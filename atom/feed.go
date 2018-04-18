@@ -80,9 +80,9 @@ func (f Feed) MarshalJSON() ([]byte, error) {
 	}
 	gi := image{URL: f.Logo}
 
-	var links []Link
+	var link Link
 	if len(f.Links) > 0 {
-		links = f.Links
+		link = f.Links[0]
 	}
 
 	var authors []Author
@@ -92,7 +92,7 @@ func (f Feed) MarshalJSON() ([]byte, error) {
 
 	gf := &struct {
 		Title       string     `json:"title"`
-		Links       []Link     `json:"links"`
+		Link        Link       `json:"link"`
 		Description string     `json:"description"`
 		Updated     string     `json:"updated"`
 		Authors     []Author   `json:"authors"`
@@ -102,7 +102,7 @@ func (f Feed) MarshalJSON() ([]byte, error) {
 		Items       []Entry    `json:"items"`
 	}{
 		Title:       f.Title,
-		Links:       links,
+		Link:        link,
 		Description: f.SubTitle,
 		Updated:     f.Updated,
 		Authors:     authors,
@@ -138,9 +138,9 @@ func (a Author) MarshalJSON() ([]byte, error) {
 
 // MarshalJSON assemble gss.Item
 func (e Entry) MarshalJSON() ([]byte, error) {
-	var links []Link
+	var link Link
 	if len(e.Links) > 0 {
-		links = e.Links
+		link = e.Links[0]
 	}
 
 	var authors []Author
@@ -151,7 +151,7 @@ func (e Entry) MarshalJSON() ([]byte, error) {
 	gi := &struct {
 		ID          string     `json:"id"`
 		Title       string     `json:"title"`
-		Links       []Link     `json:"links"`
+		Link        Link       `json:"link"`
 		Description string     `json:"description"`
 		Content     string     `json:"content"`
 		PubDate     string     `json:"pubdate"`
@@ -161,7 +161,7 @@ func (e Entry) MarshalJSON() ([]byte, error) {
 	}{
 		ID:          e.ID,
 		Title:       e.Title,
-		Links:       links,
+		Link:        link,
 		Description: e.Summary,
 		Content:     e.Content,
 		PubDate:     e.Published,
