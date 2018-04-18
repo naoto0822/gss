@@ -50,13 +50,27 @@ func TestParseAtom(t *testing.T) {
 		Href: "http://example.org/2003/12/13/atom03",
 	}
 	entryLinks2 = append(entryLinks2, entryLink2)
+
+	entryCategory2_1 := Category{
+		Term:   "Music",
+		Scheme: "http://xmlns.com/wordnet/1.6/",
+		Label:  "音楽",
+	}
+	entryCategory2_2 := Category{
+		Term:   "Sports",
+		Scheme: "http://xmlns.com/wordnet/1.6/",
+		Label:  "スポーツ",
+	}
+	entryCategories2 := []Category{entryCategory2_1, entryCategory2_2}
+
 	entry2 := Entry{
-		ID:        "urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a",
-		Title:     "Today is hot",
-		Links:     entryLinks2,
-		Updated:   "2003-12-13T18:30:02Z",
-		Published: "2018-12-13T08:29:29-04:00",
-		Summary:   "Some text.",
+		ID:         "urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a",
+		Title:      "Today is hot",
+		Links:      entryLinks2,
+		Updated:    "2003-12-13T18:30:02Z",
+		Published:  "2018-12-13T08:29:29-04:00",
+		Categories: entryCategories2,
+		Content:    `This is <b>red&blue</b>.`,
 	}
 
 	var entries []Entry

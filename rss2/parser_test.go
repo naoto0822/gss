@@ -1,7 +1,6 @@
 package rss2
 
 import (
-	"html/template"
 	"io/ioutil"
 	"reflect"
 	"testing"
@@ -37,8 +36,7 @@ func TestParseRSS2(t *testing.T) {
 		Value: "http://liftoff.msfc.nasa.gov/2003/06/03.html#item573",
 	}
 
-	var desc1 template.HTML
-	desc1 = `How do Americans get ready to work with Russians aboard the International Space Station? They take a crash course in culture, language and protocol at Russia's <a href="http://howe.iki.rssi.ru/GCTC/gctc_e.htm">Star City</a>.`
+	desc1 := `How do Americans get ready to work with Russians aboard the International Space Station? They take a crash course in culture, language and protocol at Russia's <a href="http://howe.iki.rssi.ru/GCTC/gctc_e.htm">Star City</a>.`
 
 	item1 := Item{
 		Title:       "Star City",
@@ -46,14 +44,14 @@ func TestParseRSS2(t *testing.T) {
 		Description: desc1,
 		PubDate:     "Tue, 03 Jun 2003 09:39:21 GMT",
 		GUID:        guid1,
+		Content:     "This is <i>italics</i>.",
 	}
 
 	guid2 := GUID{
 		Value: "http://liftoff.msfc.nasa.gov/2003/05/30.html#item572",
 	}
 
-	var desc2 template.HTML
-	desc2 = `this is <b>bold</b>`
+	desc2 := `this is <b>bold</b>`
 
 	item2 := Item{
 		Description: desc2,
@@ -71,6 +69,7 @@ func TestParseRSS2(t *testing.T) {
 		Description: "Before man travels to Mars, NASA hopes to design new engines that will let us fly through the Solar System more quickly. The proposed VASIMR engine would do that.",
 		PubDate:     "Tue, 27 May 2003 08:37:32 GMT",
 		GUID:        guid3,
+		Content:     "This is <b>bold</b>.",
 	}
 
 	guid4 := GUID{

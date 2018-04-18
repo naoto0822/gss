@@ -2,7 +2,6 @@ package rss2
 
 import (
 	"encoding/json"
-	"html/template"
 
 	// implement interfaces.Mappable
 	_ "github.com/naoto0822/gss/interfaces"
@@ -82,16 +81,18 @@ type SkipDays struct {
 
 // Item RSS2.0 item elements
 type Item struct {
-	Title       string        `xml:"title"`
-	Link        string        `xml:"link"`
-	Description template.HTML `xml:"description"`
-	Author      string        `xml:"author"`
-	Categories  []Category    `xml:"category"`
-	Comments    string        `xml:"comments"`
-	Enclosure   Enclosure     `xml:"enclosure"`
-	GUID        GUID          `xml:"guid"`
-	PubDate     string        `xml:"pubDate"`
-	Source      Source        `xml:"source"`
+	Title       string     `xml:"title"`
+	Link        string     `xml:"link"`
+	Description string     `xml:"description"`
+	Author      string     `xml:"author"`
+	Categories  []Category `xml:"category"`
+	Comments    string     `xml:"comments"`
+	Enclosure   Enclosure  `xml:"enclosure"`
+	GUID        GUID       `xml:"guid"`
+	PubDate     string     `xml:"pubDate"`
+	Source      Source     `xml:"source"`
+	// Content this is Content Module
+	Content string `xml:"encoded"`
 }
 
 // Enclosure RSS2.0 enclosure elements
@@ -178,6 +179,20 @@ func (c Category) MarshalJSON() ([]byte, error) {
 	return json.Marshal(c.Value)
 }
 
+// MarshalJSON assemble gss.Enclosure struct
+func (e Enclosure) MarshalJSON() ([]byte, error) {
+	ge := &struct {
+		URL    string `json:"url"`
+		Length int64  `json:"length"`
+		Type   string `json:"type"`
+	}{
+		URL:    e.URL,
+		Length: e.Length,
+		Type:   e.Type,
+	}
+	return json.Marshal(ge)
+}
+
 // MarshalJSON assemble gss.Item struct
 func (i Item) MarshalJSON() ([]byte, error) {
 	var links []string
@@ -198,21 +213,25 @@ func (i Item) MarshalJSON() ([]byte, error) {
 	}
 
 	gi := &struct {
-		ID         string        `json:"id"`
-		Title      string        `json:"title"`
-		Links      []string      `json:"links"`
-		Body       template.HTML `json:"body"`
-		PubDate    string        `json:"pubdate"`
-		Authors    []author      `json:"authors"`
-		Categories []Category    `json:"categories"`
+		ID          string     `json:"id"`
+		Title       string     `json:"title"`
+		Links       []string   `json:"links"`
+		Description string     `json:"description"`
+		Content     string     `json:"content"`
+		PubDate     string     `json:"pubdate"`
+		Authors     []author   `json:"authors"`
+		Categories  []Category `json:"categories"`
+		Enclosure   Enclosure  `json:"enclosure"`
 	}{
-		ID:         i.GUID.Value,
-		Title:      i.Title,
-		Links:      links,
-		Body:       i.Description,
-		PubDate:    i.PubDate,
-		Authors:    authors,
-		Categories: i.Categories,
+		ID:          i.GUID.Value,
+		Title:       i.Title,
+		Links:       links,
+		Description: i.Description,
+		Content:     i.Content,
+		PubDate:     i.PubDate,
+		Authors:     authors,
+		Categories:  i.Categories,
+		Enclosure:   i.Enclosure,
 	}
 	return json.Marshal(gi)
 }
