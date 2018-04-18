@@ -2,7 +2,6 @@ package gss
 
 import (
 	"encoding/json"
-	"html/template"
 )
 
 // Feed gss original feed
@@ -31,17 +30,17 @@ type Image struct {
 
 // Item gss item
 type Item struct {
-	ID          string        `json:"id"`
-	Title       string        `json:"title"`
-	Links       []string      `json:"links"`
-	Description template.HTML `json:"description"`
-	Content     template.HTML `json:"content"`
-	PubDate     string        `json:"pubdate"`
-	Updated     string        `json:"updated"`
-	Authors     []Author      `json:"authors"`
-	Categories  []string      `json:"categories"`
-	Image       Image         `json:"image"`
-	Enclosure   Enclosure     `json:"enclosure"`
+	ID          string    `json:"id"`
+	Title       string    `json:"title"`
+	Links       []string  `json:"links"`
+	Description string    `json:"description"`
+	Content     string    `json:"content"`
+	PubDate     string    `json:"pubdate"`
+	Updated     string    `json:"updated"`
+	Authors     []Author  `json:"authors"`
+	Categories  []string  `json:"categories"`
+	Image       Image     `json:"image"`
+	Enclosure   Enclosure `json:"enclosure"`
 }
 
 // Enclosure gss enclosure
