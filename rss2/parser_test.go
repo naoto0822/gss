@@ -1,7 +1,6 @@
 package rss2
 
 import (
-	"html/template"
 	"io/ioutil"
 	"reflect"
 	"testing"
@@ -37,8 +36,7 @@ func TestParseRSS2(t *testing.T) {
 		Value: "http://liftoff.msfc.nasa.gov/2003/06/03.html#item573",
 	}
 
-	var desc1 template.HTML
-	desc1 = `How do Americans get ready to work with Russians aboard the International Space Station? They take a crash course in culture, language and protocol at Russia's <a href="http://howe.iki.rssi.ru/GCTC/gctc_e.htm">Star City</a>.`
+	desc1 := `How do Americans get ready to work with Russians aboard the International Space Station? They take a crash course in culture, language and protocol at Russia's <a href="http://howe.iki.rssi.ru/GCTC/gctc_e.htm">Star City</a>.`
 
 	item1 := Item{
 		Title:       "Star City",
@@ -53,8 +51,7 @@ func TestParseRSS2(t *testing.T) {
 		Value: "http://liftoff.msfc.nasa.gov/2003/05/30.html#item572",
 	}
 
-	var desc2 template.HTML
-	desc2 = `this is <b>bold</b>`
+	desc2 := `this is <b>bold</b>`
 
 	item2 := Item{
 		Description: desc2,

@@ -2,7 +2,6 @@ package rss2
 
 import (
 	"encoding/json"
-	"html/template"
 
 	// implement interfaces.Mappable
 	_ "github.com/naoto0822/gss/interfaces"
@@ -82,18 +81,18 @@ type SkipDays struct {
 
 // Item RSS2.0 item elements
 type Item struct {
-	Title       string        `xml:"title"`
-	Link        string        `xml:"link"`
-	Description template.HTML `xml:"description"`
-	Author      string        `xml:"author"`
-	Categories  []Category    `xml:"category"`
-	Comments    string        `xml:"comments"`
-	Enclosure   Enclosure     `xml:"enclosure"`
-	GUID        GUID          `xml:"guid"`
-	PubDate     string        `xml:"pubDate"`
-	Source      Source        `xml:"source"`
+	Title       string     `xml:"title"`
+	Link        string     `xml:"link"`
+	Description string     `xml:"description"`
+	Author      string     `xml:"author"`
+	Categories  []Category `xml:"category"`
+	Comments    string     `xml:"comments"`
+	Enclosure   Enclosure  `xml:"enclosure"`
+	GUID        GUID       `xml:"guid"`
+	PubDate     string     `xml:"pubDate"`
+	Source      Source     `xml:"source"`
 	// Content this is Content Module
-	Content template.HTML `xml:"encoded"`
+	Content string `xml:"encoded"`
 }
 
 // Enclosure RSS2.0 enclosure elements
@@ -214,15 +213,15 @@ func (i Item) MarshalJSON() ([]byte, error) {
 	}
 
 	gi := &struct {
-		ID          string        `json:"id"`
-		Title       string        `json:"title"`
-		Links       []string      `json:"links"`
-		Description template.HTML `json:"description"`
-		Content     template.HTML `json:"content"`
-		PubDate     string        `json:"pubdate"`
-		Authors     []author      `json:"authors"`
-		Categories  []Category    `json:"categories"`
-		Enclosure   Enclosure     `json:"enclosure"`
+		ID          string     `json:"id"`
+		Title       string     `json:"title"`
+		Links       []string   `json:"links"`
+		Description string     `json:"description"`
+		Content     string     `json:"content"`
+		PubDate     string     `json:"pubdate"`
+		Authors     []author   `json:"authors"`
+		Categories  []Category `json:"categories"`
+		Enclosure   Enclosure  `json:"enclosure"`
 	}{
 		ID:          i.GUID.Value,
 		Title:       i.Title,
