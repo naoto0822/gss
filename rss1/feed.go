@@ -62,21 +62,16 @@ func (f Feed) ToJSON() ([]byte, error) {
 
 // MarshalJSON assemble gss.Feed struct
 func (f Feed) MarshalJSON() ([]byte, error) {
-	var links []string
-	if f.Channel.Link != "" {
-		links = append(links, f.Channel.Link)
-	}
-
 	gf := &struct {
-		Title       string   `json:"title"`
-		Links       []string `json:"links"`
-		Description string   `json:"description"`
-		Image       Image    `json:"image"`
-		PubDate     string   `json:"pubdate"`
-		Items       []Item   `json:"items"`
+		Title       string `json:"title"`
+		Link        string `json:"link"`
+		Description string `json:"description"`
+		Image       Image  `json:"image"`
+		PubDate     string `json:"pubdate"`
+		Items       []Item `json:"items"`
 	}{
 		Title:       f.Channel.Title,
-		Links:       links,
+		Link:        f.Channel.Link,
 		Description: f.Channel.Description,
 		Image:       f.Image,
 		PubDate:     f.Channel.Date,
@@ -101,11 +96,6 @@ func (i Image) MarshalJSON() ([]byte, error) {
 
 // MarshalJSON assemble gss.Item struct
 func (i Item) MarshalJSON() ([]byte, error) {
-	var links []string
-	if i.Link != "" {
-		links = append(links, i.Link)
-	}
-
 	type author struct {
 		Name  string `json:"name"`
 		Email string `json:"email"`
@@ -120,13 +110,13 @@ func (i Item) MarshalJSON() ([]byte, error) {
 
 	gi := &struct {
 		Title       string   `json:"title"`
-		Links       []string `json:"links"`
+		Link        string   `json:"link"`
 		Description string   `json:"description"`
 		PubDate     string   `json:"pubdate"`
 		Authors     []author `json:"authors"`
 	}{
 		Title:       i.Title,
-		Links:       links,
+		Link:        i.Link,
 		Description: i.Description,
 		PubDate:     i.Date,
 		Authors:     authors,
