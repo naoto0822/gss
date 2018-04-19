@@ -93,6 +93,8 @@ type Item struct {
 	Source      Source     `xml:"source"`
 	// Content this is Content Module
 	Content string `xml:"encoded"`
+	// Thumbnail this is Media Module
+	Thumbnail Thumbnail `xml:"thumbnail"`
 }
 
 // Enclosure RSS2.0 enclosure elements
@@ -112,6 +114,13 @@ type GUID struct {
 type Source struct {
 	Value string `xml:",chardata"`
 	URL   string `xml:"url,attr"`
+}
+
+// Thumbnail Media Module
+type Thumbnail struct {
+	URL    string `xml:"url,attr"`
+	Width  int64  `xml:"width,attr"`
+	Height int64  `xml:"height,attr"`
 }
 
 // ToJSON implemented interfaces.Mappable
@@ -212,6 +221,7 @@ func (i Item) MarshalJSON() ([]byte, error) {
 		Authors     []author   `json:"authors"`
 		Categories  []Category `json:"categories"`
 		Enclosure   Enclosure  `json:"enclosure"`
+		Thumbnail   Thumbnail  `json:"thumbnail"`
 	}{
 		ID:          i.GUID.Value,
 		Title:       i.Title,
@@ -222,6 +232,21 @@ func (i Item) MarshalJSON() ([]byte, error) {
 		Authors:     authors,
 		Categories:  i.Categories,
 		Enclosure:   i.Enclosure,
+		Thumbnail:   i.Thumbnail,
 	}
 	return json.Marshal(gi)
+}
+
+// MarshalJSON assemble gss.Thumbnail struct
+func (t Thumbnail) MarshalJSON() ([]byte, error) {
+	gt := &struct {
+		URL    string `json:"url"`
+		Width  int64  `json:"width"`
+		Height int64  `json:"height"`
+	}{
+		URL:    t.URL,
+		Width:  t.Width,
+		Height: t.Height,
+	}
+	return json.Marshal(gt)
 }

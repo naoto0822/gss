@@ -53,10 +53,17 @@ func TestParseRSS2(t *testing.T) {
 
 	desc2 := `this is <b>bold</b>`
 
+	thumbnail2 := Thumbnail{
+		URL:    "http://www.foo.com/keyframe.jpg",
+		Width:  75,
+		Height: 50,
+	}
+
 	item2 := Item{
 		Description: desc2,
 		PubDate:     "Fri, 30 May 2003 11:06:42 GMT",
 		GUID:        guid2,
+		Thumbnail:   thumbnail2,
 	}
 
 	guid3 := GUID{
@@ -108,7 +115,12 @@ func TestParseRSS2(t *testing.T) {
 		Channel: channel,
 	}
 
-	if !reflect.DeepEqual(feed, want) {
+	rss2Feed, ok := feed.(Feed)
+	if !ok {
+		t.Error("TestParseRSS2 not expected type")
+	}
+
+	if !reflect.DeepEqual(rss2Feed, want) {
 		t.Error("TestParseRSS2 not match, ", feed, want)
 	}
 }
