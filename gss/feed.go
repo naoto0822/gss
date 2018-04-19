@@ -41,6 +41,8 @@ type Item struct {
 	Categories  []string  `json:"categories"`
 	Image       Image     `json:"image"`
 	Enclosure   Enclosure `json:"enclosure"`
+	// Thumbnail this is Media Module
+	Thumbnail Thumbnail `json:"thumbnail"`
 }
 
 // Enclosure gss enclosure
@@ -54,6 +56,14 @@ type Enclosure struct {
 type Author struct {
 	Name  string `json:"name"`
 	Email string `json:"email"`
+}
+
+// Thumbnail gss thumbnail
+// later move to Media Module type
+type Thumbnail struct {
+	URL    string `json:"url"`
+	Width  int64  `json:"width"`
+	Height int64  `json:"height"`
 }
 
 // Map convert gss.Feed from other package Feed
