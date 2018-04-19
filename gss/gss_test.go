@@ -141,10 +141,16 @@ func TestFeedRSS2(t *testing.T) {
 		Content:     "This is <i>italics</i>.",
 	}
 
+	thumbnail2 := Thumbnail{
+		URL:    "http://www.foo.com/keyframe.jpg",
+		Width:  75,
+		Height: 50,
+	}
 	item2 := Item{
 		ID:          "http://liftoff.msfc.nasa.gov/2003/05/30.html#item572",
 		Description: `this is <b>bold</b>`,
 		PubDate:     "Fri, 30 May 2003 11:06:42 GMT",
+		Thumbnail:   thumbnail2,
 	}
 
 	item3 := Item{
