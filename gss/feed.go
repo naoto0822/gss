@@ -8,7 +8,7 @@ import (
 type Feed struct {
 	RSSType     RSSType
 	Title       string   `json:"title"`
-	Links       []string `json:"links"`
+	Link        string   `json:"link"`
 	Description string   `json:"description"`
 	Image       Image    `json:"image"`
 	CopyRight   string   `json:"copyright"`
@@ -32,7 +32,7 @@ type Image struct {
 type Item struct {
 	ID          string    `json:"id"`
 	Title       string    `json:"title"`
-	Links       []string  `json:"links"`
+	Link        string    `json:"link"`
 	Description string    `json:"description"`
 	Content     string    `json:"content"`
 	PubDate     string    `json:"pubdate"`
