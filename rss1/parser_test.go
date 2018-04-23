@@ -80,7 +80,12 @@ func TestParseRSS1(t *testing.T) {
 		TextInput: textInput,
 	}
 
-	if !reflect.DeepEqual(feed, want) {
+	rss1Feed, ok := feed.(Feed)
+	if !ok {
+		t.Error("TestParseRSS1 not expected struct type")
+	}
+
+	if !reflect.DeepEqual(rss1Feed, want) {
 		t.Error("TestParseRSS1 Parse not match Feed struct, ", feed, want)
 	}
 }
