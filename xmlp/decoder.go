@@ -54,8 +54,8 @@ func NewDecoder(r io.Reader) *Decoder {
 	}
 }
 
-// StartRoot stating decode xml tree
-func (d *Decoder) StartRoot() error {
+// RootElement stating decode xml tree
+func (d *Decoder) RootElement() error {
 	for {
 		err := d.next()
 		if err != nil {
