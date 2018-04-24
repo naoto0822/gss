@@ -54,6 +54,14 @@ func NewDecoder(r io.Reader) *Decoder {
 	}
 }
 
+// ElementName get namespace and local
+func (d *Decoder) ElementName() string {
+	if d.Space != "" {
+		return d.Space + ":" + d.Local
+	}
+	return d.Local
+}
+
 // RootElement stating decode xml tree
 func (d *Decoder) RootElement() error {
 	for {
