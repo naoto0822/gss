@@ -4,15 +4,21 @@ import (
 	"bytes"
 
 	"github.com/naoto0822/gss/interfaces"
+	"github.com/naoto0822/gss/module"
 	"github.com/naoto0822/gss/xmlp"
 )
 
 // Parser RSS1.0 parser
-type Parser struct{}
+type Parser struct {
+	moduleDecoder *module.Decoder
+}
 
 // NewParser factory Parser
 func NewParser() *Parser {
-	return &Parser{}
+	md := module.NewDecoder()
+	return &Parser{
+		moduleDecoder: md,
+	}
 }
 
 // Parse RSS1.0 feed parse
@@ -50,38 +56,34 @@ func (p *Parser) decode(d *xmlp.Decoder, f *Feed) error {
 
 		switch d.TokenType {
 		case xmlp.StartElement:
-			switch d.Local {
-			case "channel":
+			local := d.Local
+
+			if local == "channel" {
 				var channel Channel
-				err := p.decodeChannel(d, &channel)
-				if err != nil {
+				if err := p.decodeChannel(d, &channel); err != nil {
 					return err
 				}
 				f.Channel = channel
-			case "image":
+			} else if local == "image" {
 				var image Image
-				err := d.DecodeElement(&image)
-				if err != nil {
+				if err := d.DecodeElement(&image); err != nil {
 					return err
 				}
 				f.Image = image
-			case "item":
+			} else if local == "item" {
 				var item Item
-				err := p.decodeItem(d, &item)
-				if err != nil {
+				if err := p.decodeItem(d, &item); err != nil {
 					return err
 				}
 				f.Items = append(f.Items, item)
-			case "textinput":
+			} else if local == "textinput" {
 				var textInput TextInput
-				err := d.DecodeElement(&textInput)
-				if err != nil {
+				if err := d.DecodeElement(&textInput); err != nil {
 					return err
 				}
 				f.TextInput = textInput
-			default:
-				err := d.Skip()
-				if err != nil {
+			} else {
+				if err := d.Skip(); err != nil {
 					return err
 				}
 			}
@@ -112,45 +114,32 @@ func (p *Parser) decodeChannel(d *xmlp.Decoder, c *Channel) error {
 
 		switch d.TokenType {
 		case xmlp.StartElement:
-			switch d.Local {
-			case "title":
+			local := d.Local
+
+			if local == "title" {
 				var title string
-				err := d.DecodeElement(&title)
-				if err != nil {
+				if err := d.DecodeElement(&title); err != nil {
 					return err
 				}
 				c.Title = title
-			case "link":
+			} else if local == "link" {
 				var link string
-				err := d.DecodeElement(&link)
-				if err != nil {
+				if err := d.DecodeElement(&link); err != nil {
 					return err
 				}
 				c.Link = link
-			case "description":
+			} else if local == "description" {
 				var description string
-				err := d.DecodeElement(&description)
-				if err != nil {
+				if err := d.DecodeElement(&description); err != nil {
 					return err
 				}
 				c.Description = description
-			case "date":
-				var date string
-				err := d.DecodeElement(&date)
-				if err != nil {
+			} else if p.moduleDecoder.IsModule(d) {
+				if err := p.moduleDecoder.DecodeElement(d, &c.Modules); err != nil {
 					return err
 				}
-				c.Date = date
-			case "language":
-				var lang string
-				err := d.DecodeElement(&lang)
-				if err != nil {
-					return err
-				}
-				c.Language = lang
-			default:
-				err := d.Skip()
-				if err != nil {
+			} else {
+				if err := d.Skip(); err != nil {
 					return err
 				}
 			}
@@ -181,45 +170,32 @@ func (p *Parser) decodeItem(d *xmlp.Decoder, i *Item) error {
 
 		switch d.TokenType {
 		case xmlp.StartElement:
-			switch d.Local {
-			case "title":
+			local := d.Local
+
+			if local == "title" {
 				var title string
-				err := d.DecodeElement(&title)
-				if err != nil {
+				if err := d.DecodeElement(&title); err != nil {
 					return err
 				}
 				i.Title = title
-			case "link":
+			} else if local == "link" {
 				var link string
-				err := d.DecodeElement(&link)
-				if err != nil {
+				if err := d.DecodeElement(&link); err != nil {
 					return err
 				}
 				i.Link = link
-			case "description":
+			} else if local == "description" {
 				var description string
-				err := d.DecodeElement(&description)
-				if err != nil {
+				if err := d.DecodeElement(&description); err != nil {
 					return err
 				}
 				i.Description = description
-			case "creator":
-				var creator string
-				err := d.DecodeElement(&creator)
-				if err != nil {
+			} else if p.moduleDecoder.IsModule(d) {
+				if err := p.moduleDecoder.DecodeElement(d, &i.Modules); err != nil {
 					return err
 				}
-				i.Creator = creator
-			case "date":
-				var date string
-				err := d.DecodeElement(&date)
-				if err != nil {
-					return err
-				}
-				i.Date = date
-			default:
-				err := d.Skip()
-				if err != nil {
+			} else {
+				if err := d.Skip(); err != nil {
 					return err
 				}
 			}

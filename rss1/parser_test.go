@@ -4,6 +4,8 @@ import (
 	"io/ioutil"
 	"reflect"
 	"testing"
+
+	"github.com/naoto0822/gss/module"
 )
 
 func TestNewParser(t *testing.T) {
@@ -32,12 +34,19 @@ func TestParseRSS1(t *testing.T) {
 	}
 
 	// following expected Struct
+	cDublinCore := module.DublinCore{
+		Date:     "2003-12-13T18:30:02Z",
+		Language: "ja",
+	}
+	cModules := module.Modules{
+		DublinCore: cDublinCore,
+	}
+
 	channel := Channel{
 		Title:       "Channel Title",
 		Link:        "http://xml.com/pub",
 		Description: "this is description.",
-		Date:        "2003-12-13T18:30:02Z",
-		Language:    "ja",
+		Modules:     cModules,
 	}
 
 	image := Image{
@@ -46,20 +55,32 @@ func TestParseRSS1(t *testing.T) {
 		URL:   "http://xml.com/universal/images/xml_tiny.gif",
 	}
 
+	item1DublinCore := module.DublinCore{
+		Date:    "2003-12-13T18:30:02Z",
+		Creator: "記事1の作者名",
+	}
+	item1Modules := module.Modules{
+		DublinCore: item1DublinCore,
+	}
 	item1 := Item{
 		Title:       "Processing Inclusions with XSLT",
 		Link:        "http://xml.com/pub/2000/08/09/xslt/xslt.html",
 		Description: "Processing document inclusions with general XML tools can be problematic. This article proposes a way of preserving inclusion information through SAX-based processing.",
-		Date:        "2003-12-13T18:30:02Z",
-		Creator:     "記事1の作者名",
+		Modules:     item1Modules,
 	}
 
+	item2DublinCore := module.DublinCore{
+		Date:    "2003-12-13T18:30:02Z",
+		Creator: "記事2の作者名",
+	}
+	item2Modules := module.Modules{
+		DublinCore: item2DublinCore,
+	}
 	item2 := Item{
 		Title:       "Putting RDF to Work",
 		Link:        "http://xml.com/pub/2000/08/09/rdfdb/index.html",
 		Description: "Tool and API support for the Resource Description Framework is slowly coming of age. Edd Dumbill takes a look at RDFDB, one of the most exciting new RDF toolkits.",
-		Date:        "2003-12-13T18:30:02Z",
-		Creator:     "記事2の作者名",
+		Modules:     item2Modules,
 	}
 
 	var items []Item
