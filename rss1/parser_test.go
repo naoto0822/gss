@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/naoto0822/gss/module"
+	"github.com/naoto0822/gss/modules"
 )
 
 func TestNewParser(t *testing.T) {
@@ -34,11 +34,11 @@ func TestParseRSS1(t *testing.T) {
 	}
 
 	// following expected Struct
-	cDublinCore := module.DublinCore{
+	cDublinCore := modules.DublinCore{
 		Date:     "2003-12-13T18:30:02Z",
 		Language: "ja",
 	}
-	cModules := module.Modules{
+	cModules := modules.Modules{
 		DublinCore: cDublinCore,
 	}
 
@@ -55,11 +55,11 @@ func TestParseRSS1(t *testing.T) {
 		URL:   "http://xml.com/universal/images/xml_tiny.gif",
 	}
 
-	item1DublinCore := module.DublinCore{
+	item1DublinCore := modules.DublinCore{
 		Date:    "2003-12-13T18:30:02Z",
 		Creator: "記事1の作者名",
 	}
-	item1Modules := module.Modules{
+	item1Modules := modules.Modules{
 		DublinCore: item1DublinCore,
 	}
 	item1 := Item{
@@ -69,11 +69,11 @@ func TestParseRSS1(t *testing.T) {
 		Modules:     item1Modules,
 	}
 
-	item2DublinCore := module.DublinCore{
+	item2DublinCore := modules.DublinCore{
 		Date:    "2003-12-13T18:30:02Z",
 		Creator: "記事2の作者名",
 	}
-	item2Modules := module.Modules{
+	item2Modules := modules.Modules{
 		DublinCore: item2DublinCore,
 	}
 	item2 := Item{

@@ -1,4 +1,4 @@
-package module
+package modules
 
 import (
 	"github.com/naoto0822/gss/xmlp"

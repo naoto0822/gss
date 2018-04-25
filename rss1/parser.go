@@ -4,18 +4,18 @@ import (
 	"bytes"
 
 	"github.com/naoto0822/gss/interfaces"
-	"github.com/naoto0822/gss/module"
+	"github.com/naoto0822/gss/modules"
 	"github.com/naoto0822/gss/xmlp"
 )
 
 // Parser RSS1.0 parser
 type Parser struct {
-	moduleDecoder *module.Decoder
+	moduleDecoder *modules.Decoder
 }
 
 // NewParser factory Parser
 func NewParser() *Parser {
-	md := module.NewDecoder()
+	md := modules.NewDecoder()
 	return &Parser{
 		moduleDecoder: md,
 	}

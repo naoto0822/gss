@@ -3,7 +3,7 @@ package rss1
 import (
 	"encoding/json"
 
-	"github.com/naoto0822/gss/module"
+	"github.com/naoto0822/gss/modules"
 	// implment interfaces.Mappable
 	_ "github.com/naoto0822/gss/interfaces"
 )
@@ -23,7 +23,7 @@ type Channel struct {
 	Title       string `xml:"title"`
 	Link        string `xml:"link"`
 	Description string `xml:"description"`
-	Modules     module.Modules
+	Modules     modules.Modules
 }
 
 // Image RSS1.0 image
@@ -38,7 +38,7 @@ type Item struct {
 	Title       string `xml:"title"`
 	Link        string `xml:"link"`
 	Description string `xml:"description"`
-	Modules     module.Modules
+	Modules     modules.Modules
 }
 
 // TextInput RSS1.0 TextInput
