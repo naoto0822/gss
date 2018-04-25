@@ -6,16 +6,19 @@ import (
 
 const (
 	dublinCoreSpace = "http://purl.org/dc/elements/1.1/"
-	mediaSpace      = ""
-	contentSpace    = ""
+	mediaSpace      = "http://search.yahoo.com/mrss/"
+	contentSpace    = "http://purl.org/rss/1.0/modules/content/"
 )
 
+// Decoder RSS modules decoder
 type Decoder struct{}
 
+// NewDecoder
 func NewDecoder() *Decoder {
 	return &Decoder{}
 }
 
+// IsModule current Element is RSS module?
 func (md *Decoder) IsModule(d *xmlp.Decoder) bool {
 	space := d.Space
 	if space == dublinCoreSpace {
@@ -24,12 +27,21 @@ func (md *Decoder) IsModule(d *xmlp.Decoder) bool {
 	return false
 }
 
+// DecodeElement RSS module decode
 func (md *Decoder) DecodeElement(d *xmlp.Decoder, m *Modules) error {
 	space := d.Space
 
 	switch space {
 	case dublinCoreSpace:
 		if err := md.decodeDublinCore(d, &m.DublinCore); err != nil {
+			return err
+		}
+	case mediaSpace:
+		if err := md.decodeMedia(d, &m.Media); err != nil {
+			return err
+		}
+	case contentSpace:
+		if err := md.decodeContent(d, &m.Content); err != nil {
 			return err
 		}
 	default:
@@ -93,6 +105,44 @@ func (md *Decoder) decodeDublinCore(d *xmlp.Decoder, dc *DublinCore) error {
 			return err
 		}
 		dc.Language = lang
+	default:
+		if err := d.Skip(); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (md *Decoder) decodeMedia(d *xmlp.Decoder, m *Media) error {
+	local := d.Local
+
+	switch local {
+	case "thumbnail":
+		var thumbnail mediaThumbnail
+		if err := d.DecodeElement(&thumbnail); err != nil {
+			return err
+		}
+		m.Thumbnail = thumbnail
+	default:
+		if err := d.Skip(); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (md *Decoder) decodeContent(d *xmlp.Decoder, c *Content) error {
+	local := d.Local
+
+	switch local {
+	case "encoded":
+		var encoded string
+		if err := d.DecodeElement(&encoded); err != nil {
+			return err
+		}
+		c.Encoded = encoded
 	default:
 		if err := d.Skip(); err != nil {
 			return err
