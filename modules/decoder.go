@@ -21,7 +21,7 @@ func NewDecoder() *Decoder {
 // IsModule current Element is RSS module?
 func (md *Decoder) IsModule(d *xmlp.Decoder) bool {
 	space := d.Space
-	if space == dublinCoreSpace {
+	if space == dublinCoreSpace || space == mediaSpace || space == contentSpace {
 		return true
 	}
 	return false
@@ -119,7 +119,7 @@ func (md *Decoder) decodeMedia(d *xmlp.Decoder, m *Media) error {
 
 	switch local {
 	case "thumbnail":
-		var thumbnail mediaThumbnail
+		var thumbnail MediaThumbnail
 		if err := d.DecodeElement(&thumbnail); err != nil {
 			return err
 		}

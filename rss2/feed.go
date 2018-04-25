@@ -3,6 +3,7 @@ package rss2
 import (
 	"encoding/json"
 
+	"github.com/naoto0822/gss/modules"
 	// implement interfaces.Mappable
 	_ "github.com/naoto0822/gss/interfaces"
 )
@@ -34,6 +35,7 @@ type Channel struct {
 	SkipHours      SkipHours  `xml:"skipHours"`
 	SkipDays       SkipDays   `xml:"skipDays"`
 	Items          []Item     `xml:"item"`
+	Modules        modules.Modules
 }
 
 // Category RSS2.0 category elements
@@ -95,6 +97,7 @@ type Item struct {
 	Content string `xml:"encoded"`
 	// Thumbnail this is Media Module
 	Thumbnail Thumbnail `xml:"thumbnail"`
+	Modules   modules.Modules
 }
 
 // Enclosure RSS2.0 enclosure elements
