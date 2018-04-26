@@ -5,16 +5,18 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/naoto0822/gss)](https://goreportcard.com/report/github.com/naoto0822/gss)
 [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/naoto0822/gss/blob/master/LICENSE)
 
-Parsing RSS by Go.
+go + rss = gss.  
+gss is client to parse RSS Feed (rdf, rss, atom...).
 
 ### support
 - [Atom](https://tools.ietf.org/html/rfc4287)
 - [RSS1.0](http://web.resource.org/rss/1.0/spec)
 - [RSS2.0](https://cyber.harvard.edu/rss/rss.html)
+- [Content module](http://web.resource.org/rss/1.0/modules/content/) only encode
+- [Dublin Core module](http://web.resource.org/rss/1.0/modules/dc/)
+- [Media module](http://www.rssboard.org/media-rss) only part element
 
 ## Installing
-
-To parse rss
 
 ```sh
 $ go get github.com/naoto0822/gss/gss
@@ -36,10 +38,6 @@ url := "https://jp.techcrunch.com/feed/"
 client := gss.NewClient()
 feed, err := client.Parse(url)
 ```
-
-### Generate Feed
-
-> feature...
 
 ## Model Preview
 
