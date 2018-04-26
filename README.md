@@ -84,9 +84,6 @@ author.Email
 
 ## Features
 
-- [ ] handle atom link by type
-- [ ] handle atom text by type
-- [ ] rename rss1 -> rdf, rss2 -> rss
 - [☓] support [Content module](http://web.resource.org/rss/1.0/modules/content/) only encode
 - [☓] support [Dublin Core module](http://web.resource.org/rss/1.0/modules/dc/)
 - [☓] support [Media module](http://www.rssboard.org/media-rss) only part element
