@@ -161,8 +161,6 @@ func (d *Decoder) next() error {
 			continue
 		}
 	}
-
-	return nil
 }
 
 func (d *Decoder) currentToken() error {
