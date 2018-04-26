@@ -105,6 +105,12 @@ func (md *Decoder) decodeDublinCore(d *xmlp.Decoder, dc *DublinCore) error {
 			return err
 		}
 		dc.Language = lang
+	case "modified":
+		var modified string
+		if err := d.DecodeElement(&modified); err != nil {
+			return err
+		}
+		dc.Modified = modified
 	default:
 		if err := d.Skip(); err != nil {
 			return err
