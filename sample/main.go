@@ -9,7 +9,7 @@ import (
 func main() {
 	fmt.Println("hello go-rss!")
 
-	url := "https://jp.techcrunch.com/feed/"
+	url := "https://pitchfork.com/rss/news/"
 	client := gss.NewClient()
 	feed, err := client.Parse(url)
 
@@ -17,5 +17,5 @@ func main() {
 		fmt.Errorf("error:", err)
 	}
 
-	fmt.Println("feed: ", feed)
+	fmt.Printf("feed: %+v", feed)
 }
