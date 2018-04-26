@@ -12,9 +12,9 @@ gss is client to parse RSS Feed (rdf, rss, atom...).
 - [Atom](https://tools.ietf.org/html/rfc4287)
 - [RSS1.0](http://web.resource.org/rss/1.0/spec)
 - [RSS2.0](https://cyber.harvard.edu/rss/rss.html)
-- [Content module](http://web.resource.org/rss/1.0/modules/content/) only encode
-- [Dublin Core module](http://web.resource.org/rss/1.0/modules/dc/)
-- [Media module](http://www.rssboard.org/media-rss) only part element
+- [Content module](http://web.resource.org/rss/1.0/modules/content/) only encode (rss2)
+- [Dublin Core module](http://web.resource.org/rss/1.0/modules/dc/) (rss1, rss2)
+- [Media module](http://www.rssboard.org/media-rss) only part element (rss2)
 
 ## Installing
 
