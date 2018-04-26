@@ -4,6 +4,8 @@ import (
 	"io/ioutil"
 	"reflect"
 	"testing"
+
+	"github.com/naoto0822/gss/modules"
 )
 
 func TestNewParser(t *testing.T) {
@@ -32,12 +34,19 @@ func TestParseRSS1(t *testing.T) {
 	}
 
 	// following expected Struct
+	cDublinCore := modules.DublinCore{
+		Date:     "2003-12-13T18:30:02Z",
+		Language: "ja",
+	}
+	cModules := modules.Modules{
+		DublinCore: cDublinCore,
+	}
+
 	channel := Channel{
 		Title:       "Channel Title",
 		Link:        "http://xml.com/pub",
 		Description: "this is description.",
-		Date:        "2003-12-13T18:30:02Z",
-		Language:    "ja",
+		Modules:     cModules,
 	}
 
 	image := Image{
@@ -46,20 +55,32 @@ func TestParseRSS1(t *testing.T) {
 		URL:   "http://xml.com/universal/images/xml_tiny.gif",
 	}
 
+	item1DublinCore := modules.DublinCore{
+		Date:    "2003-12-13T18:30:02Z",
+		Creator: "記事1の作者名",
+	}
+	item1Modules := modules.Modules{
+		DublinCore: item1DublinCore,
+	}
 	item1 := Item{
 		Title:       "Processing Inclusions with XSLT",
 		Link:        "http://xml.com/pub/2000/08/09/xslt/xslt.html",
 		Description: "Processing document inclusions with general XML tools can be problematic. This article proposes a way of preserving inclusion information through SAX-based processing.",
-		Date:        "2003-12-13T18:30:02Z",
-		Creator:     "記事1の作者名",
+		Modules:     item1Modules,
 	}
 
+	item2DublinCore := modules.DublinCore{
+		Date:    "2003-12-13T18:30:02Z",
+		Creator: "記事2の作者名",
+	}
+	item2Modules := modules.Modules{
+		DublinCore: item2DublinCore,
+	}
 	item2 := Item{
 		Title:       "Putting RDF to Work",
 		Link:        "http://xml.com/pub/2000/08/09/rdfdb/index.html",
 		Description: "Tool and API support for the Resource Description Framework is slowly coming of age. Edd Dumbill takes a look at RDFDB, one of the most exciting new RDF toolkits.",
-		Date:        "2003-12-13T18:30:02Z",
-		Creator:     "記事2の作者名",
+		Modules:     item2Modules,
 	}
 
 	var items []Item
@@ -80,7 +101,12 @@ func TestParseRSS1(t *testing.T) {
 		TextInput: textInput,
 	}
 
-	if !reflect.DeepEqual(feed, want) {
+	rss1Feed, ok := feed.(Feed)
+	if !ok {
+		t.Error("TestParseRSS1 not expected struct type")
+	}
+
+	if !reflect.DeepEqual(rss1Feed, want) {
 		t.Error("TestParseRSS1 Parse not match Feed struct, ", feed, want)
 	}
 }

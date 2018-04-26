@@ -3,6 +3,7 @@ package rss1
 import (
 	"encoding/json"
 
+	"github.com/naoto0822/gss/modules"
 	// implment interfaces.Mappable
 	_ "github.com/naoto0822/gss/interfaces"
 )
@@ -22,10 +23,7 @@ type Channel struct {
 	Title       string `xml:"title"`
 	Link        string `xml:"link"`
 	Description string `xml:"description"`
-	// Date this is Dunblin Core
-	Date string `xml:"date"`
-	// Language this is Dunblin Core
-	Language string `xml:"language"`
+	Modules     modules.Modules
 }
 
 // Image RSS1.0 image
@@ -40,10 +38,7 @@ type Item struct {
 	Title       string `xml:"title"`
 	Link        string `xml:"link"`
 	Description string `xml:"description"`
-	// Date this is Dunblin Core
-	Date string `xml:"date"`
-	// Creator this is Dunblin Core
-	Creator string `xml:"creator"`
+	Modules     modules.Modules
 }
 
 // TextInput RSS1.0 TextInput
@@ -62,6 +57,11 @@ func (f Feed) ToJSON() ([]byte, error) {
 
 // MarshalJSON assemble gss.Feed struct
 func (f Feed) MarshalJSON() ([]byte, error) {
+	var date string
+	if f.Channel.Modules.DublinCore.Date != "" {
+		date = f.Channel.Modules.DublinCore.Date
+	}
+
 	gf := &struct {
 		Title       string `json:"title"`
 		Link        string `json:"link"`
@@ -74,7 +74,7 @@ func (f Feed) MarshalJSON() ([]byte, error) {
 		Link:        f.Channel.Link,
 		Description: f.Channel.Description,
 		Image:       f.Image,
-		PubDate:     f.Channel.Date,
+		PubDate:     date,
 		Items:       f.Items,
 	}
 	return json.Marshal(gf)
@@ -96,16 +96,26 @@ func (i Image) MarshalJSON() ([]byte, error) {
 
 // MarshalJSON assemble gss.Item struct
 func (i Item) MarshalJSON() ([]byte, error) {
+	var creator string
+	if i.Modules.DublinCore.Creator != "" {
+		creator = i.Modules.DublinCore.Creator
+	}
+
 	type author struct {
 		Name  string `json:"name"`
 		Email string `json:"email"`
 	}
 	a := author{
-		Name: i.Creator,
+		Name: creator,
 	}
 	var authors []author
 	if a.Name != "" {
 		authors = append(authors, a)
+	}
+
+	var date string
+	if i.Modules.DublinCore.Date != "" {
+		date = i.Modules.DublinCore.Date
 	}
 
 	gi := &struct {
@@ -118,7 +128,7 @@ func (i Item) MarshalJSON() ([]byte, error) {
 		Title:       i.Title,
 		Link:        i.Link,
 		Description: i.Description,
-		PubDate:     i.Date,
+		PubDate:     date,
 		Authors:     authors,
 	}
 	return json.Marshal(gi)

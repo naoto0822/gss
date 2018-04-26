@@ -3,6 +3,7 @@ package rss2
 import (
 	"encoding/json"
 
+	"github.com/naoto0822/gss/modules"
 	// implement interfaces.Mappable
 	_ "github.com/naoto0822/gss/interfaces"
 )
@@ -34,6 +35,7 @@ type Channel struct {
 	SkipHours      SkipHours  `xml:"skipHours"`
 	SkipDays       SkipDays   `xml:"skipDays"`
 	Items          []Item     `xml:"item"`
+	Modules        modules.Modules
 }
 
 // Category RSS2.0 category elements
@@ -91,10 +93,7 @@ type Item struct {
 	GUID        GUID       `xml:"guid"`
 	PubDate     string     `xml:"pubDate"`
 	Source      Source     `xml:"source"`
-	// Content this is Content Module
-	Content string `xml:"encoded"`
-	// Thumbnail this is Media Module
-	Thumbnail Thumbnail `xml:"thumbnail"`
+	Modules     modules.Modules
 }
 
 // Enclosure RSS2.0 enclosure elements
@@ -116,13 +115,6 @@ type Source struct {
 	URL   string `xml:"url,attr"`
 }
 
-// Thumbnail Media Module
-type Thumbnail struct {
-	URL    string `xml:"url,attr"`
-	Width  int64  `xml:"width,attr"`
-	Height int64  `xml:"height,attr"`
-}
-
 // ToJSON implemented interfaces.Mappable
 // convert to gss.Feed
 func (f Feed) ToJSON() ([]byte, error) {
@@ -134,6 +126,13 @@ func (f Feed) MarshalJSON() ([]byte, error) {
 	var categories []Category
 	if len(f.Channel.Categories) > 0 {
 		categories = f.Channel.Categories
+	}
+
+	var date string
+	if f.Channel.PubDate != "" {
+		date = f.Channel.PubDate
+	} else if f.Channel.Modules.DublinCore.Date != "" {
+		date = f.Channel.Modules.DublinCore.Date
 	}
 
 	gf := &struct {
@@ -152,7 +151,7 @@ func (f Feed) MarshalJSON() ([]byte, error) {
 		Description: f.Channel.Description,
 		Image:       f.Channel.Image,
 		CopyRight:   f.Channel.CopyRight,
-		PubDate:     f.Channel.PubDate,
+		PubDate:     date,
 		Updated:     f.Channel.LastBuildDate,
 		Categories:  categories,
 		Items:       f.Channel.Items,
@@ -199,16 +198,42 @@ func (e Enclosure) MarshalJSON() ([]byte, error) {
 
 // MarshalJSON assemble gss.Item struct
 func (i Item) MarshalJSON() ([]byte, error) {
+	var authorName string
+	if i.Author != "" {
+		authorName = i.Author
+	} else if i.Modules.DublinCore.Creator != "" {
+		authorName = i.Modules.DublinCore.Creator
+	}
+
 	type author struct {
 		Name  string `json:"name"`
 		Email string `json:"email"`
 	}
 	a := author{
-		Name: i.Author,
+		Name: authorName,
 	}
 	var authors []author
 	if a.Name != "" {
 		authors = append(authors, a)
+	}
+
+	var pubDate string
+	if i.PubDate != "" {
+		pubDate = i.PubDate
+	} else if i.Modules.DublinCore.Date != "" {
+		pubDate = i.Modules.DublinCore.Date
+	}
+
+	type thumbnail struct {
+		URL    string `json:"url"`
+		Width  int64  `json:"width"`
+		Height int64  `json:"height"`
+	}
+
+	gt := thumbnail{
+		URL:    i.Modules.Media.Thumbnail.URL,
+		Width:  i.Modules.Media.Thumbnail.Width,
+		Height: i.Modules.Media.Thumbnail.Height,
 	}
 
 	gi := &struct {
@@ -221,32 +246,18 @@ func (i Item) MarshalJSON() ([]byte, error) {
 		Authors     []author   `json:"authors"`
 		Categories  []Category `json:"categories"`
 		Enclosure   Enclosure  `json:"enclosure"`
-		Thumbnail   Thumbnail  `json:"thumbnail"`
+		Thumbnail   thumbnail  `json:"thumbnail"`
 	}{
 		ID:          i.GUID.Value,
 		Title:       i.Title,
 		Link:        i.Link,
 		Description: i.Description,
-		Content:     i.Content,
-		PubDate:     i.PubDate,
+		Content:     i.Modules.Content.Encoded,
+		PubDate:     pubDate,
 		Authors:     authors,
 		Categories:  i.Categories,
 		Enclosure:   i.Enclosure,
-		Thumbnail:   i.Thumbnail,
+		Thumbnail:   gt,
 	}
 	return json.Marshal(gi)
-}
-
-// MarshalJSON assemble gss.Thumbnail struct
-func (t Thumbnail) MarshalJSON() ([]byte, error) {
-	gt := &struct {
-		URL    string `json:"url"`
-		Width  int64  `json:"width"`
-		Height int64  `json:"height"`
-	}{
-		URL:    t.URL,
-		Width:  t.Width,
-		Height: t.Height,
-	}
-	return json.Marshal(gt)
 }

@@ -4,6 +4,8 @@ import (
 	"io/ioutil"
 	"reflect"
 	"testing"
+
+	"github.com/naoto0822/gss/modules"
 )
 
 func TestNewParser(t *testing.T) {
@@ -38,13 +40,20 @@ func TestParseRSS2(t *testing.T) {
 
 	desc1 := `How do Americans get ready to work with Russians aboard the International Space Station? They take a crash course in culture, language and protocol at Russia's <a href="http://howe.iki.rssi.ru/GCTC/gctc_e.htm">Star City</a>.`
 
+	contentModule1 := modules.Content{
+		Encoded: "This is <i>italics</i>.",
+	}
+	module1 := modules.Modules{
+		Content: contentModule1,
+	}
+
 	item1 := Item{
 		Title:       "Star City",
 		Link:        "http://liftoff.msfc.nasa.gov/news/2003/news-starcity.asp",
 		Description: desc1,
 		PubDate:     "Tue, 03 Jun 2003 09:39:21 GMT",
 		GUID:        guid1,
-		Content:     "This is <i>italics</i>.",
+		Modules:     module1,
 	}
 
 	guid2 := GUID{
@@ -53,21 +62,34 @@ func TestParseRSS2(t *testing.T) {
 
 	desc2 := `this is <b>bold</b>`
 
-	thumbnail2 := Thumbnail{
+	thumbnail2 := modules.MediaThumbnail{
 		URL:    "http://www.foo.com/keyframe.jpg",
 		Width:  75,
 		Height: 50,
+	}
+	mediaModule2 := modules.Media{
+		Thumbnail: thumbnail2,
+	}
+	modules2 := modules.Modules{
+		Media: mediaModule2,
 	}
 
 	item2 := Item{
 		Description: desc2,
 		PubDate:     "Fri, 30 May 2003 11:06:42 GMT",
 		GUID:        guid2,
-		Thumbnail:   thumbnail2,
+		Modules:     modules2,
 	}
 
 	guid3 := GUID{
 		Value: "http://liftoff.msfc.nasa.gov/2003/05/27.html#item571",
+	}
+
+	contentModule3 := modules.Content{
+		Encoded: "This is <b>bold</b>.",
+	}
+	modules3 := modules.Modules{
+		Content: contentModule3,
 	}
 
 	item3 := Item{
@@ -76,7 +98,7 @@ func TestParseRSS2(t *testing.T) {
 		Description: "Before man travels to Mars, NASA hopes to design new engines that will let us fly through the Solar System more quickly. The proposed VASIMR engine would do that.",
 		PubDate:     "Tue, 27 May 2003 08:37:32 GMT",
 		GUID:        guid3,
-		Content:     "This is <b>bold</b>.",
+		Modules:     modules3,
 	}
 
 	guid4 := GUID{
