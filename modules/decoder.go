@@ -13,7 +13,7 @@ const (
 // Decoder RSS modules decoder
 type Decoder struct{}
 
-// NewDecoder
+// NewDecoder factory module Decoder
 func NewDecoder() *Decoder {
 	return &Decoder{}
 }

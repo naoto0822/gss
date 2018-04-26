@@ -7,6 +7,7 @@ type Media struct {
 	Thumbnail MediaThumbnail `xml:"thumbnail"`
 }
 
+// MediaThumbnail Media Thumbnail Module
 type MediaThumbnail struct {
 	URL    string `xml:"url,attr"`
 	Width  int64  `xml:"width,attr"`
