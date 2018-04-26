@@ -1,7 +1,6 @@
 package gss
 
 import (
-	//"github.com/naoto0822/gss/session"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -33,7 +32,7 @@ func TestFeedRSS1(t *testing.T) {
 	defer testServer.Close()
 
 	client := NewClient()
-	feed, err := client.Parse(testServer.URL)
+	ret, err := client.Parse(testServer.URL)
 	if err != nil {
 		t.Error("TestFeedRSS1 fail get RSS response")
 	}
@@ -72,7 +71,6 @@ func TestFeedRSS1(t *testing.T) {
 	}
 
 	want := &Feed{
-		RSSType:     RSS1,
 		Title:       "Channel Title",
 		Link:        "http://xml.com/pub",
 		Description: "this is description.",
@@ -81,8 +79,16 @@ func TestFeedRSS1(t *testing.T) {
 		Items:       items,
 	}
 
-	if !reflect.DeepEqual(feed, want) {
-		t.Error("TestFeedRSS1 not match expect feed, ", feed, want)
+	if !reflect.DeepEqual(ret.Feed, want) {
+		t.Error("TestFeedRSS1 not match expect feed, ", ret.Feed, want)
+	}
+
+	if ret.RSSType != RSS1 {
+		t.Error("TestFeedRSS1 not expected rss type, ", ret.RSSType)
+	}
+
+	if ret.RSS1Feed == nil || ret.RSS2Feed != nil || ret.AtomFeed != nil {
+		t.Error("TestFeedRSS1 failed assemble Result")
 	}
 }
 
@@ -103,8 +109,8 @@ func TestErrorFeedRSS1(t *testing.T) {
 	defer testServer.Close()
 
 	client := NewClient()
-	feed, err := client.Parse(testServer.URL)
-	if feed != nil || err == nil {
+	ret, err := client.Parse(testServer.URL)
+	if ret != nil || err == nil {
 		t.Error("TestErrorFeedRSS1 not expected return")
 	}
 }
@@ -126,7 +132,7 @@ func TestFeedRSS2(t *testing.T) {
 	defer testServer.Close()
 
 	client := NewClient()
-	feed, err := client.Parse(testServer.URL)
+	ret, err := client.Parse(testServer.URL)
 	if err != nil {
 		t.Error("TestFeedRSS2 fail get RSS response")
 	}
@@ -173,7 +179,6 @@ func TestFeedRSS2(t *testing.T) {
 	items := []Item{item1, item2, item3, item4}
 
 	want := &Feed{
-		RSSType:     RSS2,
 		Title:       "Liftoff News",
 		Link:        "http://liftoff.msfc.nasa.gov/",
 		Description: "Liftoff to Space Exploration.",
@@ -182,8 +187,16 @@ func TestFeedRSS2(t *testing.T) {
 		Items:       items,
 	}
 
-	if !reflect.DeepEqual(feed, want) {
-		t.Error("TestFeedRSS2 not match expect feed, ", feed, want)
+	if !reflect.DeepEqual(ret.Feed, want) {
+		t.Error("TestFeedRSS2 not match expect feed, ", ret.Feed, want)
+	}
+
+	if ret.RSSType != RSS2 {
+		t.Error("TestFeedRSS2 not expected rss type, ", ret.RSSType)
+	}
+
+	if ret.RSS1Feed != nil || ret.RSS2Feed == nil || ret.AtomFeed != nil {
+		t.Error("TestFeedRSS2 failed assemble Result")
 	}
 }
 
@@ -204,8 +217,8 @@ func TestErrorFeedRss2(t *testing.T) {
 	defer testServer.Close()
 
 	client := NewClient()
-	feed, err := client.Parse(testServer.URL)
-	if feed != nil || err == nil {
+	ret, err := client.Parse(testServer.URL)
+	if ret != nil || err == nil {
 		t.Error("TestErrorFeedRss2 not expected return")
 	}
 }
@@ -227,7 +240,7 @@ func TestFeedAtom(t *testing.T) {
 	defer testServer.Close()
 
 	client := NewClient()
-	feed, err := client.Parse(testServer.URL)
+	ret, err := client.Parse(testServer.URL)
 	if err != nil {
 		t.Error("TestFeedAtom fail get RSS response")
 	}
@@ -266,7 +279,6 @@ func TestFeedAtom(t *testing.T) {
 	}
 
 	want := &Feed{
-		RSSType:     Atom,
 		Title:       "Example Feed",
 		Link:        "http://google.com",
 		Description: "This is Sub title",
@@ -277,8 +289,16 @@ func TestFeedAtom(t *testing.T) {
 		Items:       items,
 	}
 
-	if !reflect.DeepEqual(feed, want) {
-		t.Error("TestFeedAtom not match expect feed, ", feed, want)
+	if !reflect.DeepEqual(ret.Feed, want) {
+		t.Error("TestFeedAtom not match expect feed, ", ret.Feed, want)
+	}
+
+	if ret.RSSType != Atom {
+		t.Error("TestFeedAtom not expected rss type, ", ret.RSSType)
+	}
+
+	if ret.RSS1Feed != nil || ret.RSS2Feed != nil || ret.AtomFeed == nil {
+		t.Error("TestFeedAtom failed assemble Result")
 	}
 }
 
@@ -299,9 +319,9 @@ func TestErrorFeedAtom(t *testing.T) {
 	defer testServer.Close()
 
 	client := NewClient()
-	feed, err := client.Parse(testServer.URL)
+	ret, err := client.Parse(testServer.URL)
 
-	if feed != nil || err == nil {
+	if ret != nil || err == nil {
 		t.Error("TestErrorFeedAtom not expected return")
 	}
 }

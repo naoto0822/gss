@@ -6,7 +6,6 @@ import (
 
 // Feed gss original feed
 type Feed struct {
-	RSSType     RSSType
 	Title       string   `json:"title"`
 	Link        string   `json:"link"`
 	Description string   `json:"description"`

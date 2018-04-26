@@ -22,7 +22,7 @@ type Client struct {
 }
 
 // Parse get gss.Result
-func (c *Client) Parse(url string) (*Feed, error) {
+func (c *Client) Parse(url string) (*Result, error) {
 	header := make(map[string]string)
 	bytes, err := c.session.Get(url, header)
 	if err != nil {
@@ -55,6 +55,6 @@ func (c *Client) Parse(url string) (*Feed, error) {
 		return nil, err
 	}
 
-	feed.RSSType = rssType
-	return &feed, nil
+	ret := makeResult(rssType, feed, mappableFeed)
+	return &ret, nil
 }
