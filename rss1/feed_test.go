@@ -26,7 +26,7 @@ func TestToJSON(t *testing.T) {
 
 	bytes, err := feed.ToJSON()
 	ret := string(bytes)
-	expect := `{"title":"this is title","link":"https://google.com","description":"this is description","image":{"title":"","url":"","link":""},"pubdate":"","items":[{"title":"this is item title","link":"https://yahoo.co.jp","description":"this is description","pubdate":"","authors":null}]}`
+	expect := `{"title":"this is title","link":"https://google.com","description":"this is description","image":{"title":"","url":"","link":""},"pubdate":"","updated":"","items":[{"title":"this is item title","link":"https://yahoo.co.jp","description":"this is description","pubdate":"","updated":"","authors":null}]}`
 
 	if err != nil || ret != expect {
 		t.Error("TestToJSON not match ecpected marshal string")

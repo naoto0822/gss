@@ -58,7 +58,7 @@ func TestToJSON(t *testing.T) {
 
 	bytes, err := feed.ToJSON()
 	ret := string(bytes)
-	expect := `{"title":"music feed","link":"https://yahoo.co.jp","description":"this is rss2 feed","image":{"title":"hoge.png","url":"http://hoge.png","link":"https://twitter.com","width":300,"height":500},"copyright":"Mr.hoge","pubdate":"1900-1-1","updated":"2000-1-1","categories":["sports","music"],"items":[{"id":"0123456789","title":"rss2 article","link":"https://facebook.com","description":"\u003cp\u003ehahaha\u003c/p\u003e","content":"","pubdate":"this is publish date","authors":[{"name":"naoto","email":""}],"categories":["sports","music"],"enclosure":{"url":"","length":0,"type":""},"thumbnail":{"url":"","width":0,"height":0}}]}`
+	expect := `{"title":"music feed","link":"https://yahoo.co.jp","description":"this is rss2 feed","image":{"title":"hoge.png","url":"http://hoge.png","link":"https://twitter.com","width":300,"height":500},"copyright":"Mr.hoge","pubdate":"1900-1-1","updated":"2000-1-1","categories":["sports","music"],"items":[{"id":"0123456789","title":"rss2 article","link":"https://facebook.com","description":"\u003cp\u003ehahaha\u003c/p\u003e","content":"","pubdate":"this is publish date","updated":"","authors":[{"name":"naoto","email":""}],"categories":["sports","music"],"enclosure":{"url":"","length":0,"type":""},"thumbnail":{"url":"","width":0,"height":0}}]}`
 
 	if err != nil || ret != expect {
 		t.Error("TestToJSON not match expected marshal string")

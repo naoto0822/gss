@@ -62,12 +62,18 @@ func (f Feed) MarshalJSON() ([]byte, error) {
 		date = f.Channel.Modules.DublinCore.Date
 	}
 
+	var updated string
+	if f.Channel.Modules.DublinCore.Modified != "" {
+		updated = f.Channel.Modules.DublinCore.Modified
+	}
+
 	gf := &struct {
 		Title       string `json:"title"`
 		Link        string `json:"link"`
 		Description string `json:"description"`
 		Image       Image  `json:"image"`
 		PubDate     string `json:"pubdate"`
+		Updated     string `json:"updated"`
 		Items       []Item `json:"items"`
 	}{
 		Title:       f.Channel.Title,
@@ -75,6 +81,7 @@ func (f Feed) MarshalJSON() ([]byte, error) {
 		Description: f.Channel.Description,
 		Image:       f.Image,
 		PubDate:     date,
+		Updated:     updated,
 		Items:       f.Items,
 	}
 	return json.Marshal(gf)
@@ -118,17 +125,24 @@ func (i Item) MarshalJSON() ([]byte, error) {
 		date = i.Modules.DublinCore.Date
 	}
 
+	var updated string
+	if i.Modules.DublinCore.Modified != "" {
+		updated = i.Modules.DublinCore.Modified
+	}
+
 	gi := &struct {
 		Title       string   `json:"title"`
 		Link        string   `json:"link"`
 		Description string   `json:"description"`
 		PubDate     string   `json:"pubdate"`
+		Updated     string   `json:"updated"`
 		Authors     []author `json:"authors"`
 	}{
 		Title:       i.Title,
 		Link:        i.Link,
 		Description: i.Description,
 		PubDate:     date,
+		Updated:     updated,
 		Authors:     authors,
 	}
 	return json.Marshal(gi)

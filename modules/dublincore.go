@@ -15,4 +15,6 @@ type DublinCore struct {
 	Date        string
 	Rights      string
 	Language    string
+	// NOTICE: Qualified Dublin Core
+	Modified string
 }
